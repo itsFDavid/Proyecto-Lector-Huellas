@@ -37,6 +37,7 @@ Este proyecto tiene como objetivo principal la refactorización del código exis
 3. Realiza tus cambios y realiza un commit explicativo (`git commit -am 'Agrega una nueva característica: X'`).
 4. Empuja tus cambios a la rama (`git push origin feature/nueva-caracteristica`).
 5. Abre un Pull Request.
+- Para mas info sobre como colaborar: https://www.youtube.com/watch?v=niPExbK8lSw
 
 ## Tareas Pendientes
 
