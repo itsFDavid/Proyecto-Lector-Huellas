@@ -24,8 +24,9 @@ Este proyecto tiene como objetivo principal la refactorización del código exis
 
 - Microcontrolador PIC18F4550
 - Lector de Huellas Dactilares
-- Lenguaje de Programación C
-- Plataforma de Desarrollo (por definir)
+- Lenguaje de Programación: C
+- Editor de Codigo: Visual Studio Code 
+- Herramienta de Control de Versiones: Git/GitHub
 
 ## Contribución
 
