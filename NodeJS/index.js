@@ -11,7 +11,6 @@ const wss = new WebSocket.Server({ port: 8080 });
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(message) {
     console.log('Mensaje recibido del cliente:', message);
-
     // Convertir el mensaje a una cadena de caracteres
     const comando = message.toString();
 
