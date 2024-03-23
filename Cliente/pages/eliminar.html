@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eliminar Datos</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-dark">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            Eliminar Datos
+          </div>
+          <div class="card-body">
+            <form id="eliminarForm">
+              <div class="form-group">
+                <label for="id">ID</label>
+                <input type="text" class="form-control" id="id" placeholder="Ingrese el ID del usuario a eliminar">
+              </div>
+              <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#confirmarEliminarModal">Eliminar Datos</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Confirmación de Eliminación -->
+  <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" role="dialog" aria-labelledby="confirmarEliminarModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title" id="confirmarEliminarModalLabel">Confirmar Eliminación</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ¿Estás seguro de que deseas eliminar los datos de este usuario?
+          <div id="datosUsuarioEliminar">
+            <!-- Aquí se mostrarán los datos del usuario a eliminar -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" onclick="eliminarDatos()">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="js/client.js"></script>
+
+  <script>
+    function eliminarDatos() {
+      // Aquí puedes agregar la lógica para enviar una solicitud al servidor y eliminar los datos del usuario con el ID especificado
+      // Por ahora, solo mostraremos un mensaje en la consola
+      const idUsuario = document.getElementById('id').value;
+      console.log('Eliminando datos del usuario con ID:', idUsuario);
+    }
+
+    // Función para mostrar los datos del usuario a eliminar en el modal
+    function mostrarDatosUsuarioEliminar() {
+      const idUsuario = document.getElementById('id').value;
+      const datosUsuarioEliminar = document.getElementById('datosUsuarioEliminar');
+      // Aquí puedes agregar la lógica para obtener los datos del usuario con el ID especificado y mostrarlos en el modal
+      // Por ahora, solo mostraremos un mensaje en el modal
+      datosUsuarioEliminar.innerHTML = `<p>Nombre: [Nombre del usuario]</p>
+                                        <p>Edad: [Edad del usuario]</p>
+                                        <p>Carrera: [Carrera del usuario]</p>
+                                        <p>Huella: [Huella del usuario]</p>`;
+    }
+
+    // Evento que se dispara al abrir el modal de confirmación
+    $('#confirmarEliminarModal').on('show.bs.modal', function (e) {
+      mostrarDatosUsuarioEliminar();
+    });
+  </script>
+</body>
+</html>

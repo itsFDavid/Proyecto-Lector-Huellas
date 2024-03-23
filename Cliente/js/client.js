@@ -32,25 +32,25 @@ function enviarComando(comando) {
 }
 
 document.getElementById('Registrar-huella').addEventListener('click', function() {
-    enviarComando('Registrar Huella');
+    window.location.href= "pages/registrar_huella.html";
 });
 
 document.getElementById('Buscar-huella').addEventListener('click', function() {
-    enviarComando('Buscar Huella');
+    window.location.href= "pages/buscar_huella.html";
 });
 
-document.getElementById('Modi-huella-data').addEventListener('click', function() {
-    enviarComando('Modificar Datos del Usuario con Huella');
+document.getElementById('all-data').addEventListener('click', function() {
+    window.location.href= "pages/all.html";
 });
 
 document.getElementById('Eli-hulla-data').addEventListener('click', function() {
-    enviarComando('Eliminar Datos con Huella');
+    window.location.href= "pages/eliminar.html";
 });
 
 // Función para habilitar o deshabilitar los botones
 function habilitarBotones(habilitar) {
     document.getElementById('Registrar-huella').disabled = !habilitar;
     document.getElementById('Buscar-huella').disabled = !habilitar;
-    document.getElementById('Modi-huella-data').disabled = !habilitar;
+    document.getElementById('all-data').disabled = !habilitar;
     document.getElementById('Eli-hulla-data').disabled = !habilitar;
 }
