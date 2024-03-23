@@ -3,41 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Comunicación WebSocket con Arduino</title>
+  <title>Interfaz con Botones</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
-  <button id="conectar" onclick="conectarArduino()">Conectar Arduino</button>
-  <div id="output"></div>
-  <input type="text" id="comando" placeholder="Ingrese un comando">
-  <button onclick="enviarComando()">Enviar Comando</button>
+<body class="bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">Datos Persona Huella</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  <script>
-    const ws = new WebSocket('ws://localhost:8080');
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <!-- Puedes agregar otros elementos de navegación aquí si es necesario -->
+        </ul>
+        <button type="button" class="btn btn-primary" id="conectarBtn">Conectar con Arduino</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col">
+        <button type="button" class="btn btn-primary btn-block mb-3" id="Registrar-huella" disabled>Registrar Huella</button>
+      </div>
+      <div class="col">
+        <button type="button" class="btn btn-primary btn-block mb-3" id="Buscar-huella" disabled>Buscar Huella</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button type="button" class="btn btn-primary btn-block mb-3" id="Modi-huella-data" disabled>Modificar Datos del Usuario con Huella</button>
+      </div>
+      <div class="col">
+        <button type="button" class="btn btn-primary btn-block mb-3" id="Eli-hulla-data" disabled>Eliminar Datos con Huella</button>
+      </div>
+    </div>
+  </div>
+  
 
-    let mensajeParcial = '';
-
-    ws.onopen = function() {
-    console.log('Conexión establecida con el servidor WebSocket');
-    document.getElementById('conectar').disabled = true;
-    };
-
-    ws.onmessage = function(event) {
-    const data = event.data.toString();
-    mensajeParcial += data;
-
-    // Verificar si se recibió el carácter de terminación '\n'
-    if (data.includes('\n')) {
-        console.log('Mensaje recibido desde el servidor:', mensajeParcial);
-        document.getElementById('output').textContent = mensajeParcial;
-        mensajeParcial = ''; // Limpiar el mensaje parcial para el próximo mensaje
-    }
-    };
-
-    function enviarComando() {
-    const comando = document.getElementById('comando').value;
-    ws.send(comando);
-    }
-
-  </script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="js/client.js"></script>
 </body>
 </html>
