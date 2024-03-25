@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario Registrar Huella</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .button-green{
+      background-color: #009E0F;
+  }
+  .button-green:hover{
+      background-color: #B6D7A8;
+      color: #FFFFFF;
+  }
+  </style>
+
 </head>
 <body class="bg-dark">
   <div class="container mt-5">
@@ -15,7 +25,7 @@
             Registrar Huella
           </div>
           <div class="card-body">
-            <form>
+            <form id="form">
               <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre">
@@ -30,7 +40,7 @@
               </div>
               <div class="form-group">
                 <label for="carrera">Foto</label>
-                <input type="file" class="form-control" id="filePhoto" placeholder="Ingrese tu Foto">
+                <input type="file" class="form-control" id="filePhoto" placeholder="Ingrese tu Foto" accept=".jpg, .jpeg, .webp, .png">
               </div>
               <button type="submit" class="btn btn-primary btn-block">Registrar Huella</button>
             </form>
@@ -40,8 +50,21 @@
     </div>
   </div>
 
+  <!--Modal-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body text-center">
+          <h5 class="modal-title mb-4" id="exampleModalLabel"></h5>
+          <button type="button" class="btn button-green me-2" id="btn-okey" data-bs-dismiss="modal">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script type="module" src="../js/registrar.js"></script>
 </body>
 </html>

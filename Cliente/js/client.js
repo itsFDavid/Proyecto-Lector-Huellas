@@ -12,8 +12,8 @@ function mostrarModal(opcion) {
     h5.textContent= title;
     $('#conexionModal .modal-body').text(msg);
     $('#conexionModal').modal('show');
-  }
-  
+}
+
 function conectarArduino() {
     if (!conectado) {
         ws = new WebSocket('ws://localhost:8080');
@@ -41,10 +41,6 @@ function conectarArduino() {
 
 document.getElementById('conectarBtn').addEventListener('click', conectarArduino);
 
-function enviarComando(comando) {
-    ws.send(comando);
-}
-
 document.getElementById('Registrar-huella').addEventListener('click', function() {
     window.location.href= "pages/registrar_huella.html";
 });
@@ -68,4 +64,7 @@ function habilitarBotones(habilitar) {
     document.getElementById('Buscar-huella').disabled = !habilitar;
     document.getElementById('all-data').disabled = !habilitar;
     document.getElementById('Eli-hulla-data').disabled = !habilitar;
+    document.getElementById('logInBtn').disabled = !habilitar;
 }
+
+window.conectado= conectado;

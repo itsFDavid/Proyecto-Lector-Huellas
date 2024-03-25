@@ -1,5 +1,6 @@
 const WebSocket = require('ws');
 const { SerialPort } = require('serialport');
+const fs = require('fs');
 
 const puertoSerie = new SerialPort({
   path: 'COM3',
@@ -11,37 +12,61 @@ const wss = new WebSocket.Server({ port: 8080 });
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(message) {
     console.log('Mensaje recibido del cliente:', message);
-    // Convertir el mensaje a una cadena de caracteres
-    const comando = message.toString();
 
-    // Enviar el comando al dispositivo Arduino
-    puertoSerie.write(comando + '\n');
-    if(comando === 'Registrar Huella'){
-          // Enviar un objeto JSON al dispositivo Arduino
-        const datos = {
-            nombre: 'Juan',
-            edad: 25,
-            carrera: 'Ingeniería',
-        };
-        const jsonDatos = JSON.stringify(datos);
-        puertoSerie.write(jsonDatos + '\n');
+    const data = JSON.parse(message);
+
+    // Verificar el comando recibido y actuar en consecuencia
+    switch (data.command) {
+      case 'signUp':
+        guardarDatos(data);
+        //puertoSerie.write("Registrar Huella");
+        break;
+      default:
+        console.log('Comando desconocido:', data.command);
+        break;
     }
-    if(comando === 'Buscar Huella'){
-        const indiceHuella = 1; // Aquí debes proporcionar el índice de la huella que deseas buscar
-        const datos = {
-            indice: indiceHuella,
-        };
-        const jsonDatos = JSON.stringify(datos);
-        puertoSerie.write(jsonDatos + '\n');
-    }
+    
   });
-
+  /*
   puertoSerie.on('data', function(data) {
-    console.log('Datos recibidos desde Arduino:\n', data.toString());
-
-    // Enviar los datos recibidos desde Arduino de vuelta al cliente
-    ws.send(data.toString());
+    const datosString= data.toString();
+    const data={
+      dataArduino: datosString
+    };
+    
+    const response= JSON.stringify(data);
+    
+    console.log('Datos recibidos desde Arduino:\n', response);
+    ws.send(response);
   });
+  */
 });
+
+// Función para guardar los datos recibidos en un archivo
+// Función para agregar los datos recibidos al archivo existente
+function guardarDatos(datos) {
+  // Ruta y nombre de archivo donde se guardarán los datos
+  const filePath = '../data/datos_cliente.json';
+
+  // Leer los datos existentes del archivo, si los hay
+  let datosAnteriores = [];
+  try {
+    const dataFromFile = fs.readFileSync(filePath);
+    datosAnteriores = JSON.parse(dataFromFile);
+  } catch (error) {
+    // No hacer nada si el archivo no existe o está vacío
+  }
+
+  // Agregar los nuevos datos al array de datos existentes
+  datosAnteriores.push(datos);
+
+  // Escribir los datos actualizados en el archivo
+  try {
+    fs.writeFileSync(filePath, JSON.stringify(datosAnteriores));
+    console.log('Datos guardados correctamente en el archivo:', filePath);
+  } catch (error) {
+    console.error('Error al guardar los datos en el archivo:', error.message);
+  }
+}
 
 
