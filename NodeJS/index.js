@@ -36,6 +36,7 @@ wss.on('connection', function connection(ws) {
     
     const response= JSON.stringify(data);
     
+    
     console.log('Datos recibidos desde Arduino:\n', response);
     ws.send(response);
   });
