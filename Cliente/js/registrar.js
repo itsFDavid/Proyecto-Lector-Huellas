@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
   let ws;
   const conectado = localStorage.getItem("conectado");
   const form = document.getElementById("form");
-  const miModal = new bootstrap.Modal(document.getElementById("exampleModal"));
-  const modalLabel = document.getElementById("exampleModalLabel");
+  var miModal = new bootstrap.Modal(document.getElementById("exampleModal"));
+  var modalLabel = document.getElementById("exampleModalLabel");
   const btnOkey = document.getElementById("btn-okey");
   console.log(conectado);
 
@@ -32,33 +32,32 @@ document.addEventListener("DOMContentLoaded", function () {
       reader.onload = function (e) {
         const img = e.target.result;
         const data = {
-          command: "signUp",
+          command: "sigUp",
           name: name,
           age: edad,
           carrer: carrera,
           photo: img,
           footPrint: "",
         };
-        ws.send(JSON.stringify(data));
-        console.log(JSON.stringify(data));
-        console.log(data)
+        const f={
+          command: 'pedirHuella'
+        }
+        ws.send(JSON.stringify(data))
       };
       reader.readAsDataURL(filePhoto.files[0]);
     }
   });
 
   ws.onmessage = function (event) {
+    const res = event.data;
+    modalLabel.textContent = "Onmessage"; // Actualiza contenido del modal
+    miModal.handleUpdate(); // Actualiza el modal
+    miModal.show();
     console.log("Mensaje recibido del servidor:", event.data);
-    if (event.data === "readingFootPrint") {
-      modalLabel.textContent = "Coloque su dedo en el lector";
-      miModal.show();
-      btnOkey.addEventListener("click", function () {
-        console.log("Registrar");
-      });
-    } else {
-      modalLabel.textContent = "Datos registrados exitosamente";
-      miModal.show();
-    }
+    console.log(res);
+
+    // Agrega un retraso si es necesario
+    // setTimeout(miModal.show, 100);
   };
 
   const cancel = document.getElementById("cancel");
