@@ -21,15 +21,9 @@ wss.on('connection', function connection(ws) {
     // Verificar el comando recibido y actuar en consecuencia
     switch (data.command) {
       case 'signUp':
-        const read= 'readingFootPrint';
-        ws.send(read, function(error){
-          if(error){
-            console.log('El mensaje no se pudo enviar');
-          }else{
-            console.log("Mensaje enviado el cual es: " + read)
-          }
-        })
-        
+        //pedir huella por medio de la mac
+        console.log(data.command)
+        ws.send('huella')
         //puertoSerie.write("Registrar Huella");
 
         guardarDatos(data);
