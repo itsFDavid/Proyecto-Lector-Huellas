@@ -35,14 +35,13 @@ document.addEventListener("DOMContentLoaded", function () {
           const res= event.data;
         }
         const data = {
-          command: "sigUp",
+          command: "signUp",
           name: name,
           age: edad,
           carrer: carrera,
           photo: img,
           footPrint: "",
         };
-        ws.send(JSON.stringify(data))
         console.log("Aqui")
         
         modalLabel.textContent="Ingrese huella"
@@ -51,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
           console.log('Huella capturada')
           window.location.href="../index.html"
         })
+        ws.send(JSON.stringify(data))
       };
       reader.readAsDataURL(filePhoto.files[0]);
     }
