@@ -1,11 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-  let ws;
-  const conectado = localStorage.getItem("conectado");
-  const form = document.getElementById("form");
+
+  const conectado = localStorage.getItem("conectado");  
   var miModal = new bootstrap.Modal(document.getElementById("exampleModal"));
   var modalLabel = document.getElementById("exampleModalLabel");
   const btnOkey = document.getElementById("btn-okey");
-  console.log(conectado);
 
   if (conectado === "false" || conectado === undefined) {
     modalLabel.textContent =
@@ -17,47 +15,20 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  ws = new WebSocket("ws://localhost:8080");
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const name = document.getElementById("nombre").value;
-    const edad = document.getElementById("edad").value;
-    const carrera = document.getElementById("carrera").value;
-    const filePhoto = document.getElementById("filePhoto");
-
-    if (filePhoto.files.length > 0) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const img = e.target.result;
-        ws.onmessage= function(event){
-          const res= event.data;
-        }
-        const data = {
-          command: "signUp",
-          name: name,
-          age: edad,
-          carrer: carrera,
-          photo: img,
-          footPrint: "",
-        };
-        console.log("Aqui")
-        
-        modalLabel.textContent="Ingrese huella"
-        miModal.show()
-        btnOkey.addEventListener('click', function(){
-          console.log('Huella capturada')
-          window.location.href="../index.html"
-        })
-        ws.send(JSON.stringify(data))
-      };
-      reader.readAsDataURL(filePhoto.files[0]);
-    }
+  const capturarHuella= document.getElementById('btn-cap');
+  capturarHuella.addEventListener('click', ()=>{
+    modalLabel.textContent="Ingresa huella en el lector, mantenla ahi";
+    miModal.show()
+    btnOkey.addEventListener('click', ()=>{
+      modalLabel.textContent="Huella registrada";
+      miModal.show();
+      btnOkey.addEventListener('click', ()=>{
+        window.location.href="../index.html";
+      });
+    });
   });
-
-  const cancel = document.getElementById("cancel");
-  cancel.addEventListener("click", function () {
-    window.location.href = "../index.html";
-  });
+    const cancel = document.getElementById("cancel");
+    cancel.addEventListener("click", function () {
+      window.location.href = "../index.html";
+    });
 });
