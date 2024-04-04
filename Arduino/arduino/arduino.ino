@@ -3,9 +3,11 @@
 
 // Definir la estructura para el registro
 struct Registro {
+  int id;
   char nombre[30];
   int edad;
   char carrera[30];
+  char photo[1000]; //<<-- verificar si la foto a guardar en archivo binario es de este tamaño o cuanto puede ser 📌
 };
 
 // Dirección de memoria para almacenar el primer registro
@@ -66,10 +68,11 @@ void buscar_huella(const char* jsonString) {
 void loop() {
   if (Serial.available() > 0) {
     String comando = Serial.readStringUntil('\n');
-    
+     
+     //Verificar si lee el comando o solo lo que se manda, tiene que leer el obejo json y despues verificar el comando
     if (comando == "Registrar Huella") {
       registrar_huella();
-      Serial.println("Huella registrada exitosamente");
+      Serial.println("ok");
     } else if (comando == "Buscar Huella") {
       String jsonString = Serial.readStringUntil('\n');
       buscar_huella(jsonString.c_str());
@@ -124,6 +127,9 @@ void registrar_huella(){
     Serial.print("Índice del registro guardado: ");
     Serial.println(indiceGuardado);
     
+
+    //TODO: devolver los datos de cualquier respuesta en un objeto JSON al sevidor  !!IMPORTANTE!! 📌 
+
     // Mostrar los datos registrados en la consola serie
     Serial.println("Los siguientes datos fueron registrados:");
     Serial.print("Nombre: ");
