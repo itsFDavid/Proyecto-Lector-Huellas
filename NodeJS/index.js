@@ -21,13 +21,22 @@ wss.on('connection', function connection(ws) {
     // Verificar el comando recibido y actuar en consecuencia
     switch (data.command) {
       case 'signUp':
-        //pedir huella por medio de la mac
         console.log(data.command)
-        ws.send('huella')
-        //puertoSerie.write("Registrar Huella");
-
-        guardarDatos(data);
+        //puertoSerie.write("sigUp"); <-- Qui mando el comando para activar el lector
         break;
+      case 'delete':
+        console.log(data.command);
+        console.log(data.id_delete);
+
+        //guardarDatos(data);
+        break;
+      case 'searchFootPrint':
+        console.log({
+          command: data.command,
+          name: data.nameToSearch,
+          id: data.idToSearch
+        })
+       break;
       default:
         console.log('Comando desconocido:', data.command);
         break;
