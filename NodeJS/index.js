@@ -12,7 +12,7 @@ const wss = new WebSocket.Server({ port: 8080 });
 
 let nextID=1;
 
-wss.on('connection', function connection(ws) {
+ws.on('connection', function connection(ws) {
   ws.on('message', function incoming(message) {
     console.log('Mensaje recibido del cliente:', message);
     
