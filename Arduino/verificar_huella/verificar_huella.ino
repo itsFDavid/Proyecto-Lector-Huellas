@@ -73,6 +73,7 @@ void Mal_Registro() {      // Activa el Buzzer 2 veces por tarjeta no autorizada
   digitalWrite(7, HIGH);
   delay(200);
   digitalWrite(7, LOW);
+  Serial.println("Huella incorrecta");
 }
 
 void abrirPuerta() {
