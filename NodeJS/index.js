@@ -8,7 +8,8 @@ const fs = require('fs');
 });
 */
 
-const wss = new WebSocket.Server({ port: 8080 });
+const ws = new WebSocket.Server({ port: 8080 });
+
 
 let nextID=1;
 
