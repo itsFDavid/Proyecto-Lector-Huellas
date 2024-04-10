@@ -1,0 +1,25 @@
+{
+  "name": "lector-huellas",
+  "version": "1.0.0",
+  "description": "Lector de huellas con arduino que consume servicios de express y envia datos a clientes mediante endpoints",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Francisco David Colin Lira",
+  "license": "ISC",
+  "dependencies": {
+    "@serialport/parser-readline": "^12.0.0",
+    "cors": "2.8.5",
+    "express": "4.19.2",
+    "fs": "0.0.1-security",
+    "http": "0.0.1-security",
+    "serialport": "12.0.0",
+    "ws": "8.16.0"
+  },
+  "devDependencies": {
+    "nodemon": "3.1.0"
+  }
+}
