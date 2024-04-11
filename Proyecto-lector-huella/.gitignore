@@ -1,0 +1,6 @@
+#Ignora archivos de la mac
+.DS_Store
+
+#Ignora archivos relacionados a claves de acceso
+.env
+

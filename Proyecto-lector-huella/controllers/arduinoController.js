@@ -16,13 +16,13 @@ const getIdFingers= (req, res)=>{
 
 const signUp = async (req, res) => {
     const data = req.body;
-    const urlGetData= `http://localhost:4321/api/arduino/getDataUser/${data.huellas_id}`;
+    const urlGetData= `http://localhost:4321/api/arduino/getDataUser/${data.huella_id}`;
 
     const response = await fetch(urlGetData);
     const dataUser = await response.json();
     console.log('Datos del usuario:', dataUser);
 
-    console.log('Datos del usuario:', data.huellas_id);
+    console.log('Datos del usuario:', data.huella_id);
     console.log('ID del usuario:', dataUser.response);
     if (!data || data == null || data == undefined || data == '') {
         res.status(400).json({ response: 'error', message: 'Los campos son requeridos' });

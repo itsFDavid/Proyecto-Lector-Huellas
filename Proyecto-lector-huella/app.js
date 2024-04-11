@@ -62,7 +62,7 @@ parser.on('data', async (data) => {
             console.log('Datos del usuario:', dataUser);
             userDataTmp.deleteData();
 
-            console.log('Datos recibidos del Arduinolos:', jsonData);     
+            console.log('Datos recibidos del Arduinolos:', dataUser);     
         }
     }
     // Enviar datos al cliente a través de WebSocket
