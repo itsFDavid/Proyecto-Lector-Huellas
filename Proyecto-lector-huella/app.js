@@ -4,6 +4,7 @@ const cors = require('cors');
 const WebSocket = require('ws'); // Importa el módulo de WebSockets
 const arduinoRouter = require('./routes/arduinoRouter');
 const { parser } = require('./utils/arduinoConnection');
+const { dataTMP } = require('./utils/dataTMP');
 
 
 const app = express();
@@ -43,8 +44,10 @@ parser.on('data', async (data) => {
             const urlGetData= `http://localhost:4321/api/arduino/getDataUser/${jsonData.id_huellaFound}`;
 
             const response = await fetch(urlGetData);
-            const data = await response.json(); 
-            console.log('Datos del usuario:', data);
+            const dataUser = await response.json(); 
+            console.log('Datos del usuario:', dataUser);
+
+            jsonData = dataUser;
 
         }
     } catch (error) {
@@ -52,6 +55,15 @@ parser.on('data', async (data) => {
         // Si falla el análisis, convertir los datos a JSON
         jsonData = { message: cleanedData }; 
         console.log('Datos recibidos del Arduinos:', jsonData);
+        if(jsonData.message== "Huella guardada"){
+            //guardar los datos en data
+            const userDataTmp = new dataTMP();
+            const dataUser = userDataTmp.getData();
+            console.log('Datos del usuario:', dataUser);
+            userDataTmp.deleteData();
+
+            console.log('Datos recibidos del Arduinolos:', jsonData);     
+        }
     }
     // Enviar datos al cliente a través de WebSocket
 
