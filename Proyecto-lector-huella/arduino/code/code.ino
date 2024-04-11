@@ -78,10 +78,12 @@ void procesarComando(String command) {
   if (strcmp(comando, "verifyFinger") == 0) {
     verifyFinger();
   } else if (strcmp(comando, "signUp") == 0) {
-    registrarHuella(doc["huellas_id"]);
+    registrarHuella(doc["huella_id"]);
   } else if (strcmp(comando, "getHuellasId") == 0) {
     numeroHuellas();
-  } else {
+  } else if(strcmp(comando, "deleteFinger")==0){
+    deleteHuellaId(doc["huella_id"]);
+  }else {
     enviarErrorF("Comando desconocido");
   }
 }
@@ -97,7 +99,7 @@ void numeroHuellas(){
 
 void verifyFinger() {
   JsonDocument doc;
-  enviarExitoF("Coloque su dedo para verificar");
+  enviarExito("Coloque su dedo para verificar");
   delay(3000);
 
   uint8_t p = fingerprint.getImage();
@@ -138,7 +140,7 @@ void abrirPuerta() {
 }
 
 void registrarHuella(uint8_t id) {
-  JsonDocument doc;
+
   uint8_t p= -1;
   while (p != FINGERPRINT_OK){
     p = fingerprint.getImage();
@@ -284,7 +286,21 @@ void registrarHuella(uint8_t id) {
 }
 
 void deleteHuellaId(uint8_t id){
-  
+  uint8_t p = -1;
+
+  p = fingerprint.deleteModel(id);
+
+  if (p == FINGERPRINT_OK) {
+    enviarExito("Huella eliminada");
+  } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
+    enviarError("Error de comunicacion");
+  } else if (p == FINGERPRINT_BADLOCATION) {
+    enviarError("No se pudo borrar en esa locacion");
+  } else if (p == FINGERPRINT_FLASHERR) {
+    enviarError("Error al escribir en flash");
+  } else {
+   enviarError("Error desconocido");
+  }
 }
 
 
