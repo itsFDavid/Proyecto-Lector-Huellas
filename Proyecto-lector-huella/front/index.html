@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente</title>
+</head>
+<body>
+
+    <h1>Datos del usuario</h1>
+    <table id="userData">
+        <tr>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Carrera</th>
+            <th>Huella ID</th>
+        </tr>
+    </table>
+
+    <h4 id="message"></h4>
+    <script>
+        // Establecer conexión con el servidor a través de WebSocket
+        const socket = new WebSocket("ws://localhost:4321");
+
+        // Escuchar eventos del servidor
+        socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const message = document.getElementById("message");
+
+            if(data.message) {
+                message.textContent = data.message;
+            }
+
+
+
+            // Verificar si se recibieron datos del usuario
+            if (data.nombre) {
+                // Obtener la tabla donde se mostrarán los datos
+                const table = document.getElementById("userData");
+
+                // Crear una nueva fila en la tabla
+                const newRow = table.insertRow();
+
+                // Insertar celdas con los datos del usuario en la nueva fila
+                const nameCell = newRow.insertCell();
+                nameCell.textContent = data.nombre;
+
+                const ageCell = newRow.insertCell();
+                ageCell.textContent = data.edad;
+
+                const careerCell = newRow.insertCell();
+                careerCell.textContent = data.carrera;
+
+                const idCell = newRow.insertCell();
+                idCell.textContent = data.huella_id;
+            }
+        };
+
+    </script>
+</body>
+</html>
