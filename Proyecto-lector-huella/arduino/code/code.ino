@@ -117,9 +117,9 @@ void verifyFinger() {
   doc["found"] = true;
   doc["id_huellaFound"]= fingerprint.fingerID;
   doc["coincidences"]= fingerprint.confidence;
-  
   serializeJson(doc, Serial);
   Serial.println();
+  abrirPuerta();
 }
 
 void abrirPuerta() {
@@ -140,8 +140,18 @@ void abrirPuerta() {
 }
 
 void registrarHuella(uint8_t id) {
+  uint8_t p=-1;
+  /*
+  enviarExito("Coloque su dedo para verificar primero su huella");
+  p = fingerprint.fingerFastSearch();
+  if (p == FINGERPRINT_OK) {
+    // La huella ya está registrada en otro ID
+    enviarError("La huella ya ha sido registrada antes");
+    return;
+  }
+  */
 
-  uint8_t p= -1;
+  p= -1;
   while (p != FINGERPRINT_OK){
     p = fingerprint.getImage();
     switch (p) {
