@@ -1,5 +1,5 @@
 import React from 'react';
-import '../index.css'
+import 'tailwindcss/tailwind.css';
 
 function Modal({ message, onClose }) {
   return (
