@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Login from './components/login';
 import Modal from './components/modal';
-import './index.css';
+import 'tailwindcss/tailwind.css';
 
 function App() {
   const [messages, setMessages] = useState([]);
