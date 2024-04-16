@@ -40,6 +40,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
         console.log(dataParse.message);
     }
   });
+
+  const regresar= document.getElementById('regresar');
+  regresar.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href= "../index.html";
+  });
+
+
   async function eliminarDatos() {
     // Aquí puedes agregar la lógica para enviar una solicitud al servidor y eliminar los datos del usuario con el ID especificado
     // Por ahora, solo mostraremos un mensaje en la consola
@@ -62,7 +70,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const confirmarEliminacion = document.getElementById('datosUsuarioEliminar');
     // Aquí puedes agregar la lógica para obtener los datos del usuario con el ID especificado y mostrarlos en el modal
     // Por ahora, solo mostraremos un mensaje en el modal
-    confirmarEliminacion.innerHTML = `¿Estás seguro de que deseas eliminar al usuario con el ID ${idUsuario}?`;
+    confirmarEliminacion.innerHTML = `¿Estás seguro de que deseas eliminar todos los datos del usuario con el ID ${idUsuario}?`;
+
 
   }
   
