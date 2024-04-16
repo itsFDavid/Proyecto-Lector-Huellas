@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Control</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .acciones-section {
+      background-color: #879a7d; 
+      padding: 20px;
+    }
+
+    .funciones-section {
+      background-color: #99ad8f; 
+      padding: 20px;
+    }
+  </style>
+</head>
+<body class="bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">Panel de Control</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Lista de elementos no disponible por ahora
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item mr-auto">
+              <a class="nav-link" href="pages/registrar_huella.html">Resgistrar Huella</a>
+            </li>
+            <li class="nav-item mr-auto">
+              <a class="nav-link" href="pages/buscar_huella.html">Buscar Huella</a>
+            </li>
+            <li class="nav-item mr-auto">
+              <a class="nav-link" href="pages/all.html">Mostrar Todos los Datos</a>
+            </li>
+            <li class="nav-item mr-auto">
+              <a class="nav-link" href="pages/eliminar.html">Eliminar Huella</a>
+            </li>
+          </ul>
+        </div>
+      -->
+      <button type="button" class="btn btn-primary" id="conectarBtn">Conectar con Arduino</button>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <div class="funciones-section mt-3">
+      <h2 id="functions">Funciones</h2>
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-primary btn-block mb-3" id="Registrar-huella" disabled>Registrar Huella</button>
+        </div>
+        <div class="col">
+          <button type="button" class="btn btn-primary btn-block mb-3" id="Iniciar-sesion" disabled>Iniciar sesion</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-primary btn-block mb-3" id="all-data" disabled>Leer Todos los Datos Registrados</button>
+        </div>
+        <div class="col">
+          <button type="button" class="btn btn-primary btn-block mb-3" id="Eli-hulla-data" disabled>Eliminar Datos con Huella</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Para conectar Arduino-->
+  <div class="modal fade" id="conexionModal" tabindex="-1" role="dialog" aria-labelledby="conexionModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="conexionModalLabel">Conexión establecida</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Conexión establecida con el servidor WebSocket
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Modal de Esperando -->
+    <div class="modal fade" id="esperandoModal" tabindex="-1" role="dialog" aria-labelledby="esperandoModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="esperandoModalLabel">Esperando...</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Por favor, espera mientras se verifica la huella dactilar...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Huella Dactilar Verificada -->
+    <div class="modal fade" id="verificadoModal" tabindex="-1" role="dialog" aria-labelledby="verificadoModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="verificadoModalLabel">Huella Dactilar Verificada</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            La huella dactilar ha sido verificada exitosamente.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script type="module" src="js/index.js"></script>
+</body>
+</html>
