@@ -15,6 +15,7 @@ app.use(cors({
     methods: ['GET', 'DELETE', 'HEAD', 'OPTIONS', 'POST', 'PUT'],
 }));
 app.use(bodyParser.json({ limit: '50mb' }));
+
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 const port = 4321;
 const server = http.createServer(app);
