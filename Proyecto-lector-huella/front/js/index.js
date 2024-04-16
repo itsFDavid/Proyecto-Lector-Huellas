@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function(){
             ws.onopen = function() {
                 mostrarModal(true);
                 document.getElementById('conectarBtn').textContent = 'Desconectar de Arduino';
+                document.getElementById('functions').textContent = 'Funciones disponibles';
                 conectado = true;
                 localStorage.setItem('conectado', conectado);
                 // Habilitar los botones una vez que se establezca la conexión
