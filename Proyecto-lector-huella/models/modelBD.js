@@ -4,7 +4,7 @@ module.exports = {
     insertar(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional) {
         return new Promise((resolve, reject) => {
             conexion.query(`
-                INSERT INTO usuarios 
+                INSERT INTO Usuarios 
                 (nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional) 
                 VALUES (?, ?, ?, ?, ?, ?, ?)`,
                 [nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional],
@@ -19,7 +19,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             conexion.query(`
                 SELECT id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional 
-                FROM usuarios`,
+                FROM Usuarios`,
                 (err, resultados) => {
                     if (err) reject(err);
                     else resolve(resultados);
@@ -31,7 +31,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             conexion.query(`
                 SELECT id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional 
-                FROM usuarios 
+                FROM Usuarios 
                 WHERE id_huella = ?`,
                 [id_huella],
                 (err, resultados) => {
@@ -44,7 +44,7 @@ module.exports = {
     eliminar(id_huella) {
         return new Promise((resolve, reject) => {
             conexion.query(`
-                DELETE FROM usuarios 
+                DELETE FROM Usuarios 
                 WHERE id_huella = ?`,
                 [id_huella],
                 (err) => {
@@ -58,7 +58,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             conexion.query(`
                 SELECT MAX(id_huella) AS ultimoId 
-                FROM usuarios`,
+                FROM Usuarios`,
                 (err, resultados) => {
                     if (err) reject(err);
                     else {
@@ -73,7 +73,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             conexion.query(`
                 SELECT COUNT(id_huella) AS totalIds 
-                FROM usuarios`,
+                FROM Usuarios`,
                 (err, resultados) => {
                     if (err) reject(err);
                     else resolve(resultados[0].totalIds);
