@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function(){
         window.location.href= "pages/registrar_huella.html";
     });
 
-    document.getElementById('Iniciar-sesion').addEventListener('click', function(e) {
+    document.getElementById('Iniciar-sesion').addEventListener('click', async function(e) {
         e.preventDefault();
         window.location.href= "pages/LogIn.html";
     });

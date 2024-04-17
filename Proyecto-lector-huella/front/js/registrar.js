@@ -56,6 +56,7 @@ registrarData.addEventListener('click', (e) => {
     // Obtener los datos del formulario
     e.preventDefault();
     const nombre = document.getElementById('nombre').value;
+    const id_huella = document.getElementById('id_huella').value;
     const apellidoPaterno = document.getElementById('apellidoPaterno').value;
     const apellidoMaterno = document.getElementById('apellidoMaterno').value;
     const correoInstitucional = document.getElementById('correoInstitucional').value;
@@ -79,6 +80,7 @@ registrarData.addEventListener('click', (e) => {
             dataUser = {
                 command: "signUp",
                 nombre: nombre,
+                id_huella: id_huella,
                 apellidoPaterno: apellidoPaterno,
                 apellidoMaterno: apellidoMaterno,
                 correoInstitucional: correoInstitucional,

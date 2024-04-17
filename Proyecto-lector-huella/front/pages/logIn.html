@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+</head>
+<style>
+    body {
+        background-color: black;
+        color: white;
+    }
+
+</style>
+<body>
+
+    <!-- Modal para mensaje inicial -->
+<div class="modal fade" id="verificarHuellaModal" tabindex="-1" aria-labelledby="verificarHuellaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body text-center">
+          <h5 class="modal-title" id="verificarHuellaModalLabel">Verificar Huella</h5>
+          <button class="btn btn-success btn-block" id="login">Iniciar sesion</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Panel de sesión -->
+  <div id="panelSesion" class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            Sesión del Usuario
+          </div>
+          <div class="card-body">
+            <p id="nombreUsuario"></p>
+            <p id="fechaNacimientoUsuario"></p>
+            <p id="carreraUsuario"></p>
+            <div id="fotoUsuario">
+               
+            </div>
+          </div>
+        </div>
+      </div>
+      <p id="mensaje"></p>
+    </div>
+  </div>
+
+  <script src="../js/logIn.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+</body>
+</html>
