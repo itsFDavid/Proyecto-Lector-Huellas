@@ -11,7 +11,7 @@ const app = express();
 
 // Configurar middleware de CORS
 app.use(cors({
-    origin: 'http://127.0.0.1:5500',
+    origin: 'http://127.0.0.1:5501',
     methods: ['GET', 'DELETE', 'HEAD', 'OPTIONS', 'POST', 'PUT'],
 }));
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -37,7 +37,7 @@ wss.on('connection', (ws) => {
 });
 
 parser.on('data', async (data) => {
-    let jsonDatas;
+
     let jsonData;
     try {
         jsonData = JSON.parse(data);
@@ -45,7 +45,9 @@ parser.on('data', async (data) => {
         // Enviar datos al cliente a través de WebSocket
         console.log('Datos recibidos del Arduino:', jsonData);
         if(jsonData.found){
-            const urlGetData= `http://localhost:4321/api/arduino/getDataUser/${jsonData.id_huellaFound}`;
+            const id_huellaFound = jsonData.id_huellaFound;
+            console.log('Datos recibidos del id:', id_huellaFound);
+            const urlGetData= `http://localhost:4321/api/arduino/getDataUser/${id_huellaFound}`;
 
             const response = await fetch(urlGetData);
             const dataUser = await response.json(); 
@@ -54,7 +56,7 @@ parser.on('data', async (data) => {
             jsonData = dataUser;
             wss.clients.forEach((client) => {
                 if (client.readyState === WebSocket.OPEN) {
-                    client.send(JSON.stringify({ event: 'found', data: jsonData }));
+                    client.send(JSON.stringify({ event: 'found', data: dataUser }));
                 }
             });
             //console.log('Datos enviados al cliente en login:', jsonData);
@@ -92,10 +94,10 @@ parser.on('data', async (data) => {
             console.log('Datos del usuario:', dataUser);
             //insertar en la base de datos tipo estos datos:
 
-            const {nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional, fotoUser} = dataUser;
+            const {id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional, fotoUser} = dataUser;
             console.log('Datos del usuario:', nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional, fotoUser);
 
-            const response = await insertar(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional);
+            const response = await insertar(id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional);
             console.log('Datos insertados:', response);
             userDataTmp.deleteData();
         }

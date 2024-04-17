@@ -1,16 +1,17 @@
 const conexion = require("../utils/dbConection");
 
 module.exports = {
-    insertar(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional) {
+    insertar(id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional) {
         return new Promise((resolve, reject) => {
             conexion.query(`
                 INSERT INTO Usuarios 
-                (nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional) 
-                VALUES (?, ?, ?, ?, ?, ?, ?)`,
-                [nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional],
+                (id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                [id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional],
                 (err, resultados) => {
                     if (err) reject(err);
                     else resolve(resultados.insertId);
+                    console.log('Datos insertados:', resultados, err);
                 }
             );
         });
@@ -18,7 +19,7 @@ module.exports = {
     obtener() {
         return new Promise((resolve, reject) => {
             conexion.query(`
-                SELECT id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional 
+                SELECT nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional 
                 FROM Usuarios`,
                 (err, resultados) => {
                     if (err) reject(err);

@@ -16,42 +16,32 @@ const getIdFingers= async (req, res)=>{
 
 const signUp = async (req, res) => {
     const data = req.body;
-    const response = await obtenerUltimoId();
-    console.log('Datos de la base de datos:', response);
-    console.log('Datos de la base de datos:', response);
-    console.log('Datos de la base de datos:', response>0);
-    let huella_id;
-    if (response) {
-        huella_id = response + 1;
-        console.log('ID del usuario:', huella_id);
-    } else {
-        // Si no hay datos en la respuesta, o si no hay un último ID, asigna 1 como valor predeterminado
-        huella_id = 1;
-    }
+    console.log('Datos enviados:', data.id_huella);
+    const id_huella = data.id_huella;
     
-    console.log('ID del usuario:', huella_id);
+    console.log('ID del usuario:', id_huella);
 
     const {nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional, fotoUser, command} = data;
     
-    const userDuplicate = await obtenerPorId(huella_id);
+    const userDuplicate = await obtenerPorId(id_huella);
     const huella_id_Duplicate = userDuplicate && userDuplicate.id_huella;
 
 
     if (!data || data == null || data == undefined || data == '' || data == {}) {
         res.status(400).json({ response: 'error', message: 'Los campos son requeridos, has enviado datos vacios' });
-    }else if (nombre == '' || apellidoPaterno == '' || apellidoMaterno == '' || fechaNacimiento == '' || carrera == '' || correoInstitucional == '' || fotoUser == '' || command == '' || huella_id == '' || huella_id == undefined || huella_id == null || huella_id < 0 || nombre == undefined || apellidoPaterno == undefined || apellidoMaterno == undefined || fechaNacimiento == undefined || carrera == undefined || correoInstitucional == undefined || fotoUser == undefined || command == undefined) {
+    }else if (nombre == '' || apellidoPaterno == '' || apellidoMaterno == '' || fechaNacimiento == '' || carrera == '' || correoInstitucional == '' || fotoUser == '' || command == '' || id_huella == '' || id_huella == undefined || id_huella == null || id_huella < 0 || nombre == undefined || apellidoPaterno == undefined || apellidoMaterno == undefined || fechaNacimiento == undefined || carrera == undefined || correoInstitucional == undefined || fotoUser == undefined || command == undefined) {
         res.status(400).json({ response: 'error', message: 'Los campos del usuario son requeridos' });
-    }else if(huella_id_Duplicate==huella_id){
+    }else if(huella_id_Duplicate==id_huella){
         res.status(400).json({ response: 'error', message: 'El id ya existe'});
     }else {
         const userDataTmp = new dataTMP();
 
 
-        userDataTmp.addData({nombre: nombre, apellidoPaterno: apellidoPaterno, 
+        userDataTmp.addData({id_huella: id_huella, nombre: nombre, apellidoPaterno: apellidoPaterno, 
                 apellidoMaterno: apellidoMaterno, fechaNacimiento: fechaNacimiento, 
                 carrera: carrera, correoInstitucional: correoInstitucional, fotoUser: fotoUser});
 
-        const jsonData = JSON.stringify({command: command, huella_id: huella_id});
+        const jsonData = JSON.stringify({command: command, huella_id: id_huella});
         arduinoPort.write(jsonData);
         console.log('Comando enviado al Arduino:', jsonData);
         res.json({ response: 'ok', message: `Enviado correctamente.` });
@@ -99,7 +89,8 @@ const getDataUser = async (req, res) => {
     console.log('ID del usuario:', id);
 
     const userData = await obtenerPorId(id);
-    //console.log('Datos del usuario:', userData);
+
+    console.log('Datos del usuario:', userData);
 
     if (!userData) {
         res.status(404).json({ response: 'error', message: 'No se encontraron datos' });
