@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
       modalLabel.textContent = dataParse.message;
       miModal.show();
       btnOkey.addEventListener('click', () => {
-        window.location.href = "eliminar_huella.html";
+        miModal.hide()
       });
     }else{
         console.log(dataParse.message);
