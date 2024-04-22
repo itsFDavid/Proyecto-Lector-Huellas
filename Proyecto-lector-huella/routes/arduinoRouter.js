@@ -2,8 +2,10 @@
 
 const express = require('express');
 const arduinoController = require('../controllers/arduinoController');
+const multer = require('multer');
 
 const router = express.Router();
+const upload = multer({destination: '../uploadsImages/'});
 
 // Ruta para enviar datos al Arduino
 router.post('/register', arduinoController.signUp);
@@ -18,5 +20,6 @@ router.get('/getAllData', arduinoController.getAllData);
 router.get('/verifyFinger', arduinoController.logIn);
 
 router.get('/getDataUser/:id', arduinoController.getDataUser);
+
 
 module.exports = router;
