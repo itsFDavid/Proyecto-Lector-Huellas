@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var miModal = new bootstrap.Modal(document.getElementById("exampleModal"));
     var modalLabel = document.getElementById("exampleModalLabel");
     const btnOkey = document.getElementById("btn-okey");
+    const ulmsg= document.getElementById('msg')
     let ws;
     ws = new WebSocket('ws://localhost:4321');
     if (conectado === "false" || conectado === undefined) {
@@ -29,13 +30,9 @@ document.addEventListener("DOMContentLoaded", function () {
           });
         } else {
             console.log(dataParse.message);
-            /*
-            modalLabel.textContent = dataParse.message;
-            miModal.show();
-            btnOkey.addEventListener('click', () => {
-                window.location.href = "registrar_huella.html";
-            });
-            */
+            const li = document.createElement('li');
+            li.textContent= dataParse.message
+            ulmsg.appendChild(li);
         }
     });
     
@@ -52,7 +49,7 @@ function ocultarCarga() {
 }
 const registrarData = document.getElementById('registrarData');
 // Escuchar el clic en el botón capturarHuella
-registrarData.addEventListener('click', (e) => {
+registrarData.addEventListener('click', async (e) => {
     // Obtener los datos del formulario
     e.preventDefault();
     const nombre = document.getElementById('nombre').value;
@@ -62,66 +59,27 @@ registrarData.addEventListener('click', (e) => {
     const correoInstitucional = document.getElementById('correoInstitucional').value;
     const carrera = document.getElementById('carrera').value;
     const fechaNacimiento = document.getElementById('fechaNacimiento').value;
-    const fotoInput = document.getElementById('fotoUser');
-    console.log('fotoInput: '+fotoInput);
 
-    let dataUser={};
-    console.log(dataUser);
-    if (fotoInput.files.length > 0) {
-        const fotoFile = fotoInput.files[0];
-        const reader = new FileReader();
-
-        // Mostrar el indicador de carga
-        mostrarCarga();
-
-        reader.onload = (event) => {
-            const fotoBase64 = event.target.result;
-
-            dataUser = {
-                command: "signUp",
-                nombre: nombre,
-                id_huella: id_huella,
-                apellidoPaterno: apellidoPaterno,
-                apellidoMaterno: apellidoMaterno,
-                correoInstitucional: correoInstitucional,
-                carrera: carrera,
-                fechaNacimiento: fechaNacimiento,
-                fotoUser: fotoBase64
-            };
-            console.log(dataUser);
-            try{
-                const url= 'http://localhost:4321/api/arduino/register';
-                fetch(url, {
-                    method: 'POST',
-                    body: JSON.stringify(dataUser),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(response => response.json())
-                .then(data =>{
-                    console.log(data);
-                })
-            }catch (error) {
-                modalLabel.textContent = "Error al registrar huella";
-                miModal.show();
-                btnOkey.addEventListener('click', () => {
-                    window.location.href = "registrar_huella.html"; 
-                });
-            }
-            ocultarCarga();
-        };
-
-        reader.readAsDataURL(fotoFile);
-    } else {
-        // Manejar el caso en el que no se selecciona ninguna imagen
-        modalLabel.textContent = "No se ha seleccionado ninguna imagen";
-        miModal.show();
-        btnOkey.addEventListener('click', () => {
-            window.location.href = "registrar_huella.html";
-        });
-    }
-    
-    console.log('data: '+ dataUser);
+    const dataUser = {
+        command: "signUp",
+        nombre: nombre,
+        id_huella: id_huella,
+        apellidoPaterno: apellidoPaterno,
+        apellidoMaterno: apellidoMaterno,
+        correoInstitucional: correoInstitucional,
+        carrera: carrera,
+        fechaNacimiento: fechaNacimiento
+    };
+    console.log('dataUser:', dataUser);
+    const res= await fetch('http://localhost:4321/api/arduino/register', {
+        method: 'POST',
+        body: JSON.stringify(dataUser),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    const resp= await res.json();
+    console.log(resp)
 
 });
 
