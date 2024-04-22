@@ -16,12 +16,12 @@ const getIdFingers= async (req, res)=>{
 
 const signUp = async (req, res) => {
     const data = req.body;
-    console.log('Datos enviados:', data.id_huella);
+    console.log('Datos enviados:', data);
     const id_huella = data.id_huella;
     
     console.log('ID del usuario:', id_huella);
 
-    const {nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional, fotoUser, command} = data;
+    const {nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional, command} = data;
     
     const userDuplicate = await obtenerPorId(id_huella);
     const huella_id_Duplicate = userDuplicate && userDuplicate.id_huella;
@@ -29,7 +29,7 @@ const signUp = async (req, res) => {
 
     if (!data || data == null || data == undefined || data == '' || data == {}) {
         res.status(400).json({ response: 'error', message: 'Los campos son requeridos, has enviado datos vacios' });
-    }else if (nombre == '' || apellidoPaterno == '' || apellidoMaterno == '' || fechaNacimiento == '' || carrera == '' || correoInstitucional == '' || fotoUser == '' || command == '' || id_huella == '' || id_huella == undefined || id_huella == null || id_huella < 0 || nombre == undefined || apellidoPaterno == undefined || apellidoMaterno == undefined || fechaNacimiento == undefined || carrera == undefined || correoInstitucional == undefined || fotoUser == undefined || command == undefined) {
+    }else if (nombre == '' || apellidoPaterno == '' || apellidoMaterno == '' || fechaNacimiento == '' || carrera == '' || correoInstitucional == '' || command == '' || id_huella == '' || id_huella == undefined || id_huella == null || id_huella < 0 || nombre == undefined || apellidoPaterno == undefined || apellidoMaterno == undefined || fechaNacimiento == undefined || carrera == undefined || correoInstitucional == undefined || command == undefined) {
         res.status(400).json({ response: 'error', message: 'Los campos del usuario son requeridos' });
     }else if(huella_id_Duplicate==id_huella){
         res.status(400).json({ response: 'error', message: 'El id ya existe'});
@@ -39,7 +39,7 @@ const signUp = async (req, res) => {
 
         userDataTmp.addData({id_huella: id_huella, nombre: nombre, apellidoPaterno: apellidoPaterno, 
                 apellidoMaterno: apellidoMaterno, fechaNacimiento: fechaNacimiento, 
-                carrera: carrera, correoInstitucional: correoInstitucional, fotoUser: fotoUser});
+                carrera: carrera, correoInstitucional: correoInstitucional});
 
         const jsonData = JSON.stringify({command: command, huella_id: id_huella});
         arduinoPort.write(jsonData);
@@ -89,7 +89,6 @@ const getDataUser = async (req, res) => {
     console.log('ID del usuario:', id);
 
     const userData = await obtenerPorId(id);
-
     console.log('Datos del usuario:', userData);
 
     if (!userData) {
