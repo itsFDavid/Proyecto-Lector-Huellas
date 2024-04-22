@@ -8,19 +8,31 @@ function actualizarInterfazUsuario(userData) {
   document.getElementById("carreraUsuario").innerText = userData.carrera;
   
 
-  // Mostrar la imagen del usuari
 
+  var miModal = new bootstrap.Modal(document.getElementById("exampleModal"));
+  var modalLabel = document.getElementById("exampleModalLabel");
+  const btnOkey = document.getElementById("btn-okey");
   // Mostrar un mensaje de éxito
-  document.getElementById("mensaje").innerText = "¡Datos del usuario encontrados!";
+  modalLabel.textContent= 'Datos encontrados';
+  miModal.show()
+  btnOkey.addEventListener('click', (e)=>{
+    e.preventDefault()
+    miModal.hide()
+  })
 }
+
+
 
 ws.addEventListener('message', function(event) {
   const data = JSON.parse(event.data);
   console.log('Datos recibidos del servidor:', data);
+  const msg= document.getElementById('ul')
+  const li= document.createElement('li')
+  li.textContent= data.message
+  msg.appendChild(li);
   if (data.event === 'found') {
       // Si el evento es 'found', se procesan los datos del usuario
       const userData = data.data;
-      console.log('Datos del usuario para login:', userData);
 
       // Actualizar el panel de sesión con los datos del usuario
       actualizarInterfazUsuario(userData);
