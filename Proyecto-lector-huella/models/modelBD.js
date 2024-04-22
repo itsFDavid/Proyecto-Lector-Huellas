@@ -19,7 +19,7 @@ module.exports = {
     obtener() {
         return new Promise((resolve, reject) => {
             conexion.query(`
-                SELECT nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional 
+                SELECT nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional, id_huella
                 FROM Usuarios`,
                 (err, resultados) => {
                     if (err) reject(err);
