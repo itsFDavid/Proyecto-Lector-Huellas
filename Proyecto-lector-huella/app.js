@@ -94,10 +94,9 @@ parser.on('data', async (data) => {
             console.log('Datos del usuario:', dataUser);
             //insertar en la base de datos tipo estos datos:
 
-            const {id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional, fotoUser} = dataUser;
-            console.log('Datos del usuario:', nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional, fotoUser);
-
-            const response = await insertar(id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional);
+            const {id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional} = dataUser;
+            console.log('Datos del usuario:', nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional);
+            const response = await insertar(id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional);
             console.log('Datos insertados:', response);
             userDataTmp.deleteData();
         }

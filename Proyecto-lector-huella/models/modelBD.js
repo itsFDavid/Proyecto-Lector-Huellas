@@ -1,13 +1,13 @@
 const conexion = require("../utils/dbConection");
 
 module.exports = {
-    insertar(id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional) {
+    insertar(id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional) {
         return new Promise((resolve, reject) => {
             conexion.query(`
                 INSERT INTO Usuarios 
-                (id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                [id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional],
+                (id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)`,
+                [id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional],
                 (err, resultados) => {
                     if (err) reject(err);
                     else resolve(resultados.insertId);
@@ -19,7 +19,7 @@ module.exports = {
     obtener() {
         return new Promise((resolve, reject) => {
             conexion.query(`
-                SELECT nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional 
+                SELECT nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional 
                 FROM Usuarios`,
                 (err, resultados) => {
                     if (err) reject(err);
@@ -31,7 +31,7 @@ module.exports = {
     obtenerPorId(id_huella) {
         return new Promise((resolve, reject) => {
             conexion.query(`
-                SELECT id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fotoUser, carrera, correoInstitucional 
+                SELECT id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional 
                 FROM Usuarios 
                 WHERE id_huella = ?`,
                 [id_huella],
