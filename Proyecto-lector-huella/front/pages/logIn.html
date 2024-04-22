@@ -4,24 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <style>
-    body {
-        background-color: black;
-        color: white;
-    }
+  body{
+    color: #000;
+  }
 
 </style>
-<body>
+<body class="bg-dark">
 
     <!-- Modal para mensaje inicial -->
-<div class="modal fade" id="verificarHuellaModal" tabindex="-1" aria-labelledby="verificarHuellaModalLabel" aria-hidden="true">
+<div class="modal fade" id="verificarHuellaModal" tabindex="-1" aria-labelledby="verificarHuellaModalLabel" aria-hidden="false">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-body text-center">
-          <h5 class="modal-title" id="verificarHuellaModalLabel">Verificar Huella</h5>
-          <button class="btn btn-success btn-block" id="login">Iniciar sesion</button>
-        </div>
       </div>
     </div>
   </div>
@@ -38,9 +34,10 @@
             <p id="nombreUsuario"></p>
             <p id="fechaNacimientoUsuario"></p>
             <p id="carreraUsuario"></p>
-            <div id="fotoUsuario">
-               
-            </div>
+            <p id="correoInstitucional"></p>
+          </div>
+          <div class="modal-body text-center">
+            <button class="btn btn-success btn-block" id="login">Iniciar sesion</button>
           </div>
         </div>
       </div>

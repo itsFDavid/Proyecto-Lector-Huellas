@@ -3,37 +3,15 @@ const ws = new WebSocket('ws://localhost:4321');
 
 function actualizarInterfazUsuario(userData) {
   // Mostrar los datos del usuario en algún lugar de la página web
-  document.getElementById("nombreUsuario").innerText = userData.nombre;
+  document.getElementById("nombreUsuario").innerText = userData.nombre+ " " + userData.apellidoPaterno + " " + userData.apellidoMaterno;
   document.getElementById("fechaNacimientoUsuario").innerText = userData.fechaNacimiento;
   document.getElementById("carreraUsuario").innerText = userData.carrera;
   
-  const fotoUserBuffer = userData.fotoUser.data;
-  console.log('Foto del usuario en Buffer:', fotoUserBuffer);
 
-  // Convertir el ArrayBuffer en una cadena base64
-  const base64Image = arrayBufferToBase64(fotoUserBuffer);
-  console.log('Foto del usuario en base64:', base64Image);
-  // Construir la URL de la imagen
-  const imageUrl = `data:image/jpeg;base64,${base64Image}`;
-  console.log('URL de la imagen:', imageUrl);
-
-  // Mostrar la imagen del usuario
-  const img = document.createElement("img");
-  img.src = imageUrl;
-  img.alt = "Foto de perfil";
-  document.getElementById("fotoUsuario").appendChild(img);
+  // Mostrar la imagen del usuari
 
   // Mostrar un mensaje de éxito
   document.getElementById("mensaje").innerText = "¡Datos del usuario encontrados!";
-}
-
-function arrayBufferToBase64(buffer) {
-  const binary = new Uint8Array(buffer);
-  const bytes = [];
-  binary.forEach((byte) => {
-    bytes.push(String.fromCharCode(byte));
-  });
-  return btoa(bytes.join(''));
 }
 
 ws.addEventListener('message', function(event) {
