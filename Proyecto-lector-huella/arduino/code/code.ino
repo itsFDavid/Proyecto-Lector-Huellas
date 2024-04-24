@@ -110,7 +110,7 @@ void verifyFinger() {
 
   p = fingerprint.fingerFastSearch();
   if (p != FINGERPRINT_OK) {
-    enviarErrorF("Huella no registrada, registra una nueva huella");
+    enviarError("Huella no registrada, registra una nueva huella");
     return;
   }
   doc["response"]="success";
