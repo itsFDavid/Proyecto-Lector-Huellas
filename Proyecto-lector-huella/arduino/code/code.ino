@@ -124,15 +124,15 @@ void verifyFinger() {
 
 void abrirPuerta() {
   int pos;
-
-  for(pos=0; pos<180; pos++){
+  for(pos=90; pos>0; pos--){
     servoMotor.write(pos);
     delay(2);
   }
   // Abre la puerta
-  delay(1000);
-  for(pos=180; pos>0; pos--){
-    pos-=2;
+  enviarExito("Puerta Abierta");
+  delay(5000);
+  for(pos=0; pos<90; pos++){
+    pos+=2;
     servoMotor.write(pos);
     delay(2);
   }
