@@ -4,3 +4,4 @@
 #Ignora archivos relacionados a claves de acceso
 .env
 
+../start.sh
