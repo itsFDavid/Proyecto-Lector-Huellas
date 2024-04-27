@@ -1,12 +1,22 @@
+document.addEventListener('DOMContentLoaded', async function() {
+  const url= 'http://localhost:4321/api/arduino/verifyFinger'
+  const data = await fetch(url);
+  const response = await data.json();
+  console.log(response);
+
+
 // Conexión al servidor de WebSocket
 const ws = new WebSocket('ws://localhost:4321');
 
 function actualizarInterfazUsuario(userData) {
   // Mostrar los datos del usuario en algún lugar de la página web
+  console.log(userData)
   document.getElementById("nombreUsuario").innerText = userData.nombre+ " " + userData.apellidoPaterno + " " + userData.apellidoMaterno;
-  document.getElementById("fechaNacimientoUsuario").innerText = userData.fechaNacimiento;
+  document.getElementById("fechaNacimientoUsuario").innerText = userData.EDAD + " Años";
   document.getElementById("carreraUsuario").innerText = userData.carrera;
-  
+  document.getElementById("correoInstitucional").innerText = userData.correoInstitucional;
+  const img= document.getElementById('img')
+  img.src= userData.fotoUser
 
 
   var miModal = new bootstrap.Modal(document.getElementById("exampleModal"));
@@ -39,11 +49,4 @@ ws.addEventListener('message', function(event) {
   }
 });
 
-const iniciarSesion= document.getElementById('login');
-iniciarSesion.addEventListener('click', async function(e) {
-  e.preventDefault();
-  const url= 'http://localhost:4321/api/arduino/verifyFinger'
-  const data = await fetch(url);
-  const response = await data.json();
-  console.log(response);
 });
