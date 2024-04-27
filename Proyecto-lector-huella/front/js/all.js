@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", async ()=>{
   }
   const response= await fetch('http://localhost:4321/api/arduino/getAllData')
   const data= await response.json()
-  
   const tabla= document.getElementById('tabla-huellas')
   let tr;
   let th_nombre, th_edad, th_carrera, th_idhuella, th_correo;
@@ -29,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     th_idhuella= document.createElement('th')
     th_correo= document.createElement('th')
     th_nombre.innerHTML= data[i].nombre
-    th_edad.innerHTML= data[i].fechaNacimiento
+    th_edad.innerHTML= data[i].EDAD + " Años"
     th_carrera.innerHTML= data[i].carrera
     th_idhuella.innerHTML= data[i].id_huella
     th_correo.innerHTML= data[i].correoInstitucional
