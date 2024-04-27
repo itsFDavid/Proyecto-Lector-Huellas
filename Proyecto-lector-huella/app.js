@@ -6,6 +6,9 @@ const arduinoRouter = require('./routes/arduinoRouter');
 const { parser } = require('./utils/arduinoConnection');
 const { dataTMP } = require('./utils/dataTMP');
 const {insertar, obtenerNumeroIds} = require('./models/modelBD');
+const fs = require('fs');
+const path = require('path');
+
 const bodyParser = require('body-parser');
 const app = express();
 
@@ -92,13 +95,24 @@ parser.on('data', async (data) => {
             const userDataTmp = new dataTMP();
             const dataUser = userDataTmp.getData()[0];
             console.log('Datos del usuario:', dataUser);
+            const {id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional, fotoUser} = dataUser;
+            console.log('Datos del usuario:', nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional, fotoUser);
+            
+            
+            const imageName = fotoUser;
+            
             //insertar en la base de datos tipo estos datos:
-
-            const {id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional} = dataUser;
-            console.log('Datos del usuario:', nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional);
-            const response = await insertar(id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional);
+            const response = await insertar(id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional, imageName);
             console.log('Datos insertados:', response);
             userDataTmp.deleteData();
+        }else if(jsonData.message== "No se pudieron encontrar caracteristicas en la huella" || jsonData.message== "Error desconocido" || jsonData.message== "Error en la imagen" || jsonData.message== "Error de comunicacion" || jsonData.message== "No existen coincidencias en las capturas de huella" || jsonData.message== "No se pudo almacenar en la locacion indicada" || jsonData.message == "Error al escribir en flash"){
+            const userDataTmp = new dataTMP();
+            const data = userDataTmp.getData()[0];
+            const {fotoUser} = data;
+            const imageName = fotoUser;
+            const pathImage = path.join(__dirname, 'public/uploads', imageName);
+            fs.unlinkSync(pathImage);
+
         }
     }
     let JsonString= JSON.stringify(jsonData);
