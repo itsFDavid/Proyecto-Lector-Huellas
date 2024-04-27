@@ -1,8 +1,9 @@
 const { arduinoPort } = require('../utils/arduinoConnection');
 const { dataTMP }= require('../utils/dataTMP');
 const {eliminar, obtener, obtenerPorId, obtenerUltimoId} = require('../models/modelBD');
-
-
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 
 
 const getIdFingers= async (req, res)=>{
@@ -15,7 +16,11 @@ const getIdFingers= async (req, res)=>{
 }
 
 const signUp = async (req, res) => {
+    const file = req.file;
+    console.log('Archivo:', file);
     const data = req.body;
+    console.log('Datos enviados:', data);
+
     console.log('Datos enviados:', data);
     const id_huella = data.id_huella;
     
@@ -23,11 +28,13 @@ const signUp = async (req, res) => {
 
     const {nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional, command} = data;
     
+    console.log('Datos del usuario:', nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional, command);
+
     const userDuplicate = await obtenerPorId(id_huella);
     const huella_id_Duplicate = userDuplicate && userDuplicate.id_huella;
 
 
-    if (!data || data == null || data == undefined || data == '' || data == {}) {
+    if (!data) {
         res.status(400).json({ response: 'error', message: 'Los campos son requeridos, has enviado datos vacios' });
     }else if (nombre == '' || apellidoPaterno == '' || apellidoMaterno == '' || fechaNacimiento == '' || carrera == '' || correoInstitucional == '' || command == '' || id_huella == '' || id_huella == undefined || id_huella == null || id_huella < 0 || nombre == undefined || apellidoPaterno == undefined || apellidoMaterno == undefined || fechaNacimiento == undefined || carrera == undefined || correoInstitucional == undefined || command == undefined) {
         res.status(400).json({ response: 'error', message: 'Los campos del usuario son requeridos' });
@@ -35,17 +42,19 @@ const signUp = async (req, res) => {
         res.status(400).json({ response: 'error', message: 'El id ya existe'});
     }else {
         const userDataTmp = new dataTMP();
-
+        const imageName = file.fieldname + '-' + Date.now() + `.${file.originalname.split('.').pop()}`;
+        console.log('foto nombre:', imageName);
 
         userDataTmp.addData({id_huella: id_huella, nombre: nombre, apellidoPaterno: apellidoPaterno, 
                 apellidoMaterno: apellidoMaterno, fechaNacimiento: fechaNacimiento, 
-                carrera: carrera, correoInstitucional: correoInstitucional});
+                carrera: carrera, correoInstitucional: correoInstitucional, fotoUser: imageName});
 
         const jsonData = JSON.stringify({command: command, huella_id: id_huella});
         arduinoPort.write(jsonData);
         console.log('Comando enviado al Arduino:', jsonData);
         res.json({ response: 'ok', message: `Enviado correctamente.` });
     }
+    
 };
 
 
@@ -57,8 +66,40 @@ const deleteFinger = async (req, res) => {
         res.status(400).json({ response: 'error', message: 'Los campos enviados no son validos' });
     } else {
         const jsonData = JSON.stringify({ command: 'deleteFinger', huella_id: id });
+        const dataImage = await obtenerPorId(id);
+        console.log('Datos del usuario:', dataImage);
+        const imageName = dataImage.fotoUser;
         const response = await eliminar(id);
         console.log('Datos eliminados en la bd:', response);
+
+
+        const directorio = '../public/uploads'; // Ruta al directorio que contiene los archivos a eliminar
+        
+        // Lee el contenido del directorio
+        fs.readdir(directorio, (err, archivos) => {
+            if (err) {
+                console.error('Error al leer el directorio:', err);
+                return;
+            }
+
+            // Filtra los archivos por el nombre especificado
+            const archivosAEliminar = archivos.filter(archivo => archivo === imageName);
+
+            // Elimina cada archivo encontrado
+            archivosAEliminar.forEach(archivo => {
+                const rutaArchivo = path.join(directorio, archivo);
+
+                // Elimina el archivo
+                fs.unlink(rutaArchivo, err => {
+                    if (err) {
+                        console.error('Error al eliminar el archivo:', err);
+                        return;
+                    }
+                    console.log(`Archivo ${archivo} eliminado correctamente.`);
+                });
+            });
+        });
+
         
         arduinoPort.write(jsonData);
         res.json({ response: 'ok', message: `Enviado correctamente.` });
@@ -75,6 +116,7 @@ const logIn = (req, res) => {
         res.json({ response: 'ok', message: `Enviado correctamente.` });
     }
 };
+
 
 
 const getAllData = async (req, res) => {
@@ -97,12 +139,46 @@ const getDataUser = async (req, res) => {
         res.json(userData);
     }
 }
+
+const uploadImage = (req, res) => {
+    try {
+        console.log('Imagen recibida:', req.file);
+        console.log('Datos de la imagen:', JSON.parse(req.file));
+        const {image } = req.body;
+        const data = JSON.parse(image);
+
+        const imageName = data.fieldname + '-' + Date.now() + `.${data.originalname.split('.').pop()}`;
+        console.log('foto nombre:', imageName);
+        // Aquí podrías realizar acciones adicionales, como guardar la ruta de la imagen en la base de datos
+
+        res.status(200).json({ 
+            success: true, 
+            data: { imageName: imageName }, 
+            message: 'La imagen se ha subido correctamente.' 
+        });
+    } catch (error) {
+        console.error('Error al cargar la imagen:', error);
+        res.status(500).json({ success: false, message: 'Error al cargar la imagen.' });
+    }
+};
+
+module.exports = {
+    uploadImage: uploadImage
+};
+
+const getImages = async (req, res) => {
+    console.log('Imagen solicitada:', req.params.image);
+    const imageName = req.params.image;
+    res.sendFile(path.join(__dirname, `../public/uploads/${imageName}`));
+}
 module.exports = {
     getIdFingers,
     signUp,
     deleteFinger,
     logIn,
     getAllData,
-    getDataUser
+    getDataUser,
+    uploadImage,
+    getImages
 };
 
