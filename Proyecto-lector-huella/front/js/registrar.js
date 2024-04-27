@@ -18,8 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     ws.addEventListener('message', function(event) {
         const data = event.data;
-        console.log(data);
-        console.log(data.message);
+
         const dataParse = JSON.parse(data);
         console.log(dataParse);
         if(dataParse.message === 'Huella guardada') {
@@ -36,22 +35,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
     
-        // Definir una función para mostrar un indicador de carga
-function mostrarCarga() {
-    // Código para mostrar un indicador de carga (puede ser un spinner, mensaje, etc.)
-    console.log("Cargando...");
-}
-
-// Definir una función para ocultar el indicador de carga
-function ocultarCarga() {
-    // Código para ocultar el indicador de carga
-    console.log("Carga completada.");
-}
 const registrarData = document.getElementById('registrarData');
 // Escuchar el clic en el botón capturarHuella
 registrarData.addEventListener('click', async (e) => {
-    // Obtener los datos del formulario
     e.preventDefault();
+    
+    const formData = new FormData();
+    
+    // Obtener los datos del formulario
     const nombre = document.getElementById('nombre').value;
     const id_huella = document.getElementById('id_huella').value;
     const apellidoPaterno = document.getElementById('apellidoPaterno').value;
@@ -60,23 +51,22 @@ registrarData.addEventListener('click', async (e) => {
     const carrera = document.getElementById('carrera').value;
     const fechaNacimiento = document.getElementById('fechaNacimiento').value;
 
-    const dataUser = {
-        command: "signUp",
-        nombre: nombre,
-        id_huella: id_huella,
-        apellidoPaterno: apellidoPaterno,
-        apellidoMaterno: apellidoMaterno,
-        correoInstitucional: correoInstitucional,
-        carrera: carrera,
-        fechaNacimiento: fechaNacimiento
-    };
-    console.log('dataUser:', dataUser);
+    const fotoUser = document.getElementById('fotoUser')
+
+    formData.append('command', 'signUp');
+    formData.append('nombre', nombre);
+    formData.append('id_huella', id_huella);
+    formData.append('apellidoPaterno', apellidoPaterno);
+    formData.append('apellidoMaterno', apellidoMaterno);
+    formData.append('correoInstitucional', correoInstitucional);
+    formData.append('carrera', carrera);
+    formData.append('fechaNacimiento', fechaNacimiento);
+    formData.append('fotoUser', fotoUser.files[0]);
+
+    console.log('dataUser:', formData.get('fotoUser'));
     const res= await fetch('http://localhost:4321/api/arduino/register', {
         method: 'POST',
-        body: JSON.stringify(dataUser),
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        body: formData,
     })
     const resp= await res.json();
     console.log(resp)
