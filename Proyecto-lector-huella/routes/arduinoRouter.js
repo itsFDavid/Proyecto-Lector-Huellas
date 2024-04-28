@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
       cb(null, uploadPath)
     },
     filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now() + `.${file.originalname.split('.').pop()}`)
+      cb(null, file.fieldname + '-' + req.body.id_huella + '-' + req.body.correoInstitucional + `.${file.originalname.split('.').pop()}`)
     }
   })
   
