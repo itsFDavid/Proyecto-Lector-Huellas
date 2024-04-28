@@ -4,6 +4,7 @@ const {eliminar, obtener, obtenerPorId, obtenerUltimoId} = require('../models/mo
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { use } = require('../routes/arduinoRouter');
 
 
 const getIdFingers= async (req, res)=>{
@@ -42,7 +43,7 @@ const signUp = async (req, res) => {
         res.status(400).json({ response: 'error', message: 'El id ya existe'});
     }else {
         const userDataTmp = new dataTMP();
-        const imageName = file.fieldname + '-' + Date.now() + `.${file.originalname.split('.').pop()}`;
+        const imageName = file.fieldname + '-' + id_huella + '-' + correoInstitucional + `.${file.originalname.split('.').pop()}`;
         console.log('foto nombre:', imageName);
 
         userDataTmp.addData({id_huella: id_huella, nombre: nombre, apellidoPaterno: apellidoPaterno, 
@@ -132,6 +133,8 @@ const getDataUser = async (req, res) => {
 
     const userData = await obtenerPorId(id);
     console.log('Datos del usuario:', userData);
+    
+
 
     if (!userData) {
         res.status(404).json({ response: 'error', message: 'No se encontraron datos' });
@@ -149,7 +152,6 @@ const uploadImage = (req, res) => {
 
         const imageName = data.fieldname + '-' + Date.now() + `.${data.originalname.split('.').pop()}`;
         console.log('foto nombre:', imageName);
-        // Aquí podrías realizar acciones adicionales, como guardar la ruta de la imagen en la base de datos
 
         res.status(200).json({ 
             success: true, 
