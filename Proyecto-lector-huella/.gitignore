@@ -3,5 +3,6 @@
 
 #Ignora archivos relacionados a claves de acceso
 .env
-
+./node_modules/
 ../start.sh
+./public/
