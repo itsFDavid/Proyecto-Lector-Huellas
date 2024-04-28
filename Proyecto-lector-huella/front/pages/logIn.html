@@ -10,7 +10,18 @@
   body{
     color: #000;
   }
-
+  img{
+    height: 300px;
+    width: 250px;
+    display: none;
+  }
+  #cardi{
+    height: 360px;
+    width: 570px;
+  }
+  #panelSesion{
+    display: none;
+  }
 </style>
 <body class="bg-dark">
 
@@ -29,33 +40,38 @@
   <div id="panelSesion" class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <div class="card">
+        <div class="card" id="cardi">
           <div class="card-header bg-primary text-white">
             Sesión del Usuario
           </div>
-          <div class="card-body">
-            <p id="nombreUsuario"></p>
-            <p id="fechaNacimientoUsuario"></p>
-            <p id="carreraUsuario"></p>
-            <p id="correoInstitucional"></p>
-            
-            <img src="" alt="" id="img" class="">
+          <div class="row">
+            <div class="col md-6">
+              <img src="" alt="" id="img" class="">
+            </div>
+            <div class="col md-6">
+              <div class="card-body">
+                <p id="nombreUsuario"></p>
+                <p id="fechaNacimientoUsuario"></p>
+                <p id="carreraUsuario"></p>
+                <p id="correoInstitucional"></p>
+                
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="row justify-content-center mt-4">
-          <ul class="bg-succes justify-content-center" id="ul">
-            Mensajes
-          </ul>
         </div>
       </div>
     </div>
   </div>
-
-  <script src="../js/logIn.js"></script>
+    
+    <div class="row justify-content-center mt-4">
+      <ul class="bg-succes justify-content-center" id="ul">
+        Mensajes
+      </ul>
+    </div>
+  <script type="module" src="../js/logIn.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
 </body>
 </html>
