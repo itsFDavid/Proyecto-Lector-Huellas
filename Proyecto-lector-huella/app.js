@@ -8,7 +8,6 @@ const { dataTMP } = require('./utils/dataTMP');
 const {insertar, obtenerNumeroIds} = require('./models/modelBD');
 const fs = require('fs');
 const path = require('path');
-
 const bodyParser = require('body-parser');
 const app = express();
 
@@ -55,6 +54,9 @@ parser.on('data', async (data) => {
             const response = await fetch(urlGetData);
             const dataUser = await response.json(); 
             console.log('Datos del usuario para login:', dataUser);
+
+
+
 
             jsonData = dataUser;
             wss.clients.forEach((client) => {
