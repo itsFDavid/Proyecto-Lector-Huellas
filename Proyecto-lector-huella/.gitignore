@@ -3,6 +3,7 @@
 
 #Ignora archivos relacionados a claves de acceso
 .env
-./node_modules/
+node_modules/
 ../start.sh
-./public/
+public/
+.gitignore
