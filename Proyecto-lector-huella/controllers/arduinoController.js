@@ -74,32 +74,11 @@ const deleteFinger = async (req, res) => {
         console.log('Datos eliminados en la bd:', response);
 
 
-        const directorio = '../public/uploads'; // Ruta al directorio que contiene los archivos a eliminar
+
         
         // Lee el contenido del directorio
-        fs.readdir(directorio, (err, archivos) => {
-            if (err) {
-                console.error('Error al leer el directorio:', err);
-                return;
-            }
-
-            // Filtra los archivos por el nombre especificado
-            const archivosAEliminar = archivos.filter(archivo => archivo === imageName);
-
-            // Elimina cada archivo encontrado
-            archivosAEliminar.forEach(archivo => {
-                const rutaArchivo = path.join(directorio, archivo);
-
-                // Elimina el archivo
-                fs.unlink(rutaArchivo, err => {
-                    if (err) {
-                        console.error('Error al eliminar el archivo:', err);
-                        return;
-                    }
-                    console.log(`Archivo ${archivo} eliminado correctamente.`);
-                });
-            });
-        });
+        const pathImage = path.join(__dirname, '../public/uploads', imageName);
+        fs.unlinkSync(pathImage);
 
         
         arduinoPort.write(jsonData);
