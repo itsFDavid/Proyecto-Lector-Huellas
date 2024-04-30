@@ -1,5 +1,8 @@
 #Ignora archivos de la mac
-.DS_Store
+*.DS_Store
+*.visualstudio
+
+
 
 #Ignora archivos relacionados a claves de acceso
 .env
@@ -7,3 +10,6 @@ node_modules/
 ../start.sh
 public/
 .gitignore
+
+
+
