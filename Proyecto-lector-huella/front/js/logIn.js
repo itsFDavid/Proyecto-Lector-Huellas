@@ -63,4 +63,13 @@ ws.addEventListener('message', function(event) {
   }
 });
 
+  const reset= document.getElementById('reset')
+
+  reset.addEventListener('click', (e)=>{
+    e.preventDefault();
+    window.location.reload();
+  })
+
+
+
 });
