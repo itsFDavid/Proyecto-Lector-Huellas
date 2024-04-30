@@ -19,25 +19,40 @@ document.addEventListener("DOMContentLoaded", async ()=>{
   const data= await response.json()
   const tabla= document.getElementById('tabla-huellas')
   let tr;
-  let th_nombre, th_edad, th_carrera, th_idhuella, th_correo;
+  let th_nombre, th_edad, th_carrera, th_idhuella, th_correo, th_img, img;
   for(let i=0; i<data.length; i++){
+    const urlGetImage = `http://localhost:4321/api/arduino/getImages/${data[i].fotoUser}`
+    const respuesta= await fetch(urlGetImage)
+    const imgBlob= await respuesta.blob();
+    const image= URL.createObjectURL(imgBlob)
+
+
     tr= document.createElement('tr')
     th_nombre= document.createElement('th')
     th_edad= document.createElement('th')
     th_carrera= document.createElement('th')
     th_idhuella= document.createElement('th')
     th_correo= document.createElement('th')
+    th_img= document.createElement('th')
+    img= document.createElement('img')
+
+    img.src= image
+
     th_nombre.innerHTML= data[i].nombre
     th_edad.innerHTML= data[i].EDAD + " Años"
     th_carrera.innerHTML= data[i].carrera
     th_idhuella.innerHTML= data[i].id_huella
     th_correo.innerHTML= data[i].correoInstitucional
+    th_img.appendChild(img)
+    
 
     tr.appendChild(th_idhuella)
     tr.appendChild(th_nombre)
     tr.appendChild(th_edad)
     tr.appendChild(th_carrera)
     tr.appendChild(th_correo)
+    tr.appendChild(th_img)
+
     tabla.appendChild(tr)
   }
   
