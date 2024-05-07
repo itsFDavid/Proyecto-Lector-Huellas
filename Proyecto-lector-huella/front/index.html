@@ -7,25 +7,32 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
     .acciones-section {
-      background-color: #879a7d; 
+      background-color: #dce0e6; 
       padding: 20px;
     }
 
     .funciones-section {
-      background-color: #99ad8f; 
+      color: #dce0e6; 
       padding: 20px;
+    }
+    .space{
+      background-image: linear-gradient(#1f1f20, #2b4c7e);
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      height: 100vh;
     }
   </style>
 </head>
-<body class="bg-dark">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="#">Panel de Control</a>
+<body class="space">
+    
+    <nav class="navbar navbar-expand-lg ">
+      <div class="container">
+        <a class="navbar-brand" href="#">Panel de Control</a>
       </button>
       <button type="button" class="btn btn-primary" id="conectarBtn">Conectar con el servidor</button>
     </div>
   </nav>
-
+  
   <div class="container mt-5">
     <div class="funciones-section mt-3">
       <h2 id="functions">Funciones</h2>
@@ -47,7 +54,7 @@
       </div>
     </div>
   </div>
-
+  
   <!-- Modal Para conectar Arduino-->
   <div class="modal fade" id="conexionModal" tabindex="-1" role="dialog" aria-labelledby="conexionModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -67,49 +74,50 @@
       </div>
     </div>
   </div>
-    <!-- Modal de Esperando -->
-    <div class="modal fade" id="esperandoModal" tabindex="-1" role="dialog" aria-labelledby="esperandoModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="esperandoModalLabel">Esperando...</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Por favor, espera mientras se verifica la huella dactilar...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          </div>
+  <!-- Modal de Esperando -->
+  <div class="modal fade" id="esperandoModal" tabindex="-1" role="dialog" aria-labelledby="esperandoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="esperandoModalLabel">Esperando...</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Por favor, espera mientras se verifica la huella dactilar...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>
-
-    <!-- Modal de Huella Dactilar Verificada -->
-    <div class="modal fade" id="verificadoModal" tabindex="-1" role="dialog" aria-labelledby="verificadoModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="verificadoModalLabel">Huella Dactilar Verificada</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            La huella dactilar ha sido verificada exitosamente.
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
-          </div>
+  </div>
+  
+  <!-- Modal de Huella Dactilar Verificada -->
+  <div class="modal fade" id="verificadoModal" tabindex="-1" role="dialog" aria-labelledby="verificadoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="verificadoModalLabel">Huella Dactilar Verificada</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          La huella dactilar ha sido verificada exitosamente.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
         </div>
       </div>
     </div>
-
+  </div>
+  
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script type="module" src="js/index.js"></script>
+</div>
 </body>
 </html>
