@@ -22,18 +22,29 @@
   #panelSesion{
     display: none;
   }
+  .space{
+    background-image: linear-gradient(#1f1f20, #2b4c7e);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    height: 100vh;
+  }
+  .msg{
+    color: #FFFFFF;
+    font-size: 1.5em;
+    font-family: Arial, Helvetica, sans-serif;
+  }
 </style>
-<body class="bg-dark">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="../index.html">Panel de Control</a>
+<body class="space">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="../index.html">Panel de Control</a>
       </button>
       <button type="button" class="btn btn-primary" id="reset">Reiniciar</button>
     </div>
   </nav>
-
-
-
+  
+  
+  
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -71,12 +82,12 @@
       </div>
     </div>
   </div>
-    
-    <div class="row justify-content-center mt-4">
-      <ul class="bg-succes justify-content-center" id="ul">
-        Mensajes
-      </ul>
-    </div>
+  
+  <div class="row justify-content-center mt-4">
+    <ul class="msg justify-content-center" id="ul">
+      Mensajes
+    </ul>
+  </div>
   <script type="module" src="../js/logIn.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
