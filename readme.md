@@ -61,7 +61,7 @@ A continuación se muestran capturas de pantalla de la interfaz de usuario:
 ### Inicio de Sesion
 ![Inicio de Sesion](imgProject/signIn.png)
 
-### Eliminaicon de Usuario
+### Eliminacion de Usuario
 ![ELiminacion de Usuario](imgProject/deledeUser.png)
 
 ### Tabla de Datos
