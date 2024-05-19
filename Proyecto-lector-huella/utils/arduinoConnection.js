@@ -4,7 +4,7 @@ const Readline = require('@serialport/parser-readline');
 
 
 const arduinoPort = new SerialPort({
-    path: '/dev/cu.usbserial-1130',
+    path: '/dev/cu.usbserial-11230',
     baudRate: 9600,
 });
 
