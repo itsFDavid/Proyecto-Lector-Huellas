@@ -2,7 +2,7 @@
 *.DS_Store
 *.visualstudio
 
-
+*.vscode/
 
 #Ignora archivos relacionados a claves de acceso
 .env
