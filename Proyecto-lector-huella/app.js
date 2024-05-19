@@ -12,10 +12,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // Configurar middleware de CORS
-app.use(cors({
-    origin: 'http://127.0.0.1:5500',
-    methods: ['GET', 'DELETE', 'HEAD', 'OPTIONS', 'POST', 'PUT'],
-}));
+app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' }));
 
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
