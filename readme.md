@@ -33,7 +33,7 @@ Este proyecto fue realizado con una API con la cual al escuchar los eventos y da
     DB_NAME=tu_nombre_de_bd
     PORT=puerto_deseado
     ```
-5. Configura el archivo arduinoConnection.js en [arduino conexion](Proyecto-lector-huella/utils/arduinoConnection.js) con tu puerto serial al cual esta conectado tu arduino y el baudRate en el cual este configurado
+5. Configura el archivo en [arduinoConnection.js](Proyecto-lector-huella/utils/arduinoConnection.js) con tu puerto serial al cual esta conectado tu arduino y el baudRate en el cual este configurado
 6. Inicia el servidor:
     ```bash
     npm start
