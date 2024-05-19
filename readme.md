@@ -71,7 +71,7 @@ A continuación se muestran capturas de pantalla de la interfaz de usuario:
 Este es el prototipo del lector de huellas con el cual realizamos las lecturas y capturas de huella
 
 ## Prototipo Lector de Huellas
-![Prototipo Lector de Huellas](imgProject/prototype.heic)
+![Prototipo Lector de Huellas](imgProject/prototype.png)
 
 
 ## Contribución
