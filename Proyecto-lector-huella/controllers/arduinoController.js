@@ -1,10 +1,10 @@
 const { arduinoPort } = require('../utils/arduinoConnection');
 const { dataTMP }= require('../utils/dataTMP');
-const {eliminar, obtener, obtenerPorId, obtenerUltimoId} = require('../models/modelBD');
-const multer = require('multer');
+const {eliminar, obtener, obtenerPorId} = require('../models/modelBD');
+
 const path = require('path');
 const fs = require('fs');
-const { use } = require('../routes/arduinoRouter');
+
 
 
 const getIdFingers= async (req, res)=>{
@@ -62,10 +62,17 @@ const signUp = async (req, res) => {
 
 const deleteFinger = async (req, res) => {
     const {id} = req.params;
+    const idExist = await obtenerPorId(id);
+    console.log('Datos del usuario:', idExist);
     console.log('id enviado a eliminar al Arduino:', id);
     if (!id || id == null || id == undefined || id == '' || id < 0) {
         res.status(400).json({ response: 'error', message: 'Los campos enviados no son validos' });
+        return;
+    }else if (!idExist || idExist == null || idExist == undefined || idExist == '' || idExist < 0) {
+        res.status(404).json({ response: 'error', message: 'El id no existe' });
+        return;
     } else {
+        console.log('3')
         const jsonData = JSON.stringify({ command: 'deleteFinger', huella_id: id });
         const dataImage = await obtenerPorId(id);
         console.log('Datos del usuario:', dataImage);
@@ -76,7 +83,7 @@ const deleteFinger = async (req, res) => {
 
 
         
-        // Lee el contenido del directorio
+        
         const pathImage = path.join(__dirname, '../public/uploads', imageName);
         fs.unlinkSync(pathImage);
 
