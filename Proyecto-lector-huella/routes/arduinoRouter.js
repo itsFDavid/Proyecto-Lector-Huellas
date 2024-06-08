@@ -1,5 +1,3 @@
-// routes/arduinoRouter.js
-
 const express = require('express');
 const arduinoController = require('../controllers/arduinoController');
 const multer = require('multer');
@@ -17,13 +15,13 @@ const storage = multer.diskStorage({
     }
   })
   
-const uploadTemp = multer();
+
 const upload = multer({ storage: storage })
 
-// Ruta para enviar datos al Arduino
+
 router.post('/register', upload.single('fotoUser'), arduinoController.signUp);
 
-// Ruta para obtener datos del Arduino
+
 router.get('/getFingers', arduinoController.getIdFingers);
 
 router.delete('/deleteFinger/:id', arduinoController.deleteFinger);

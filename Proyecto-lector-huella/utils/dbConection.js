@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 require('dotenv').config();
-// Coloca aquí tus credenciales
+
 module.exports = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
