@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel de Control</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     .acciones-section {
       background-color: #dce0e6; 
@@ -21,6 +22,9 @@
       background-repeat: no-repeat;
       height: 100vh;
     }
+    #panelFunc{
+      margin-bottom: 550px;
+    }
   </style>
 </head>
 <body class="space">
@@ -33,7 +37,7 @@
     </div>
   </nav>
   
-  <div class="container mt-5">
+  <div class="container mt-5" id="panelFunc">
     <div class="funciones-section mt-3">
       <h2 id="functions">Funciones</h2>
       <div class="row">
@@ -55,64 +59,9 @@
     </div>
   </div>
   
-  <!-- Modal Para conectar Arduino-->
-  <div class="modal fade" id="conexionModal" tabindex="-1" role="dialog" aria-labelledby="conexionModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="conexionModalLabel">Conexión establecida</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Conexión establecida con el servidor WebSocket
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Modal de Esperando -->
-  <div class="modal fade" id="esperandoModal" tabindex="-1" role="dialog" aria-labelledby="esperandoModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="esperandoModalLabel">Esperando...</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Por favor, espera mientras se verifica la huella dactilar...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
   
-  <!-- Modal de Huella Dactilar Verificada -->
-  <div class="modal fade" id="verificadoModal" tabindex="-1" role="dialog" aria-labelledby="verificadoModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="verificadoModalLabel">Huella Dactilar Verificada</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          La huella dactilar ha sido verificada exitosamente.
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
   
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
