@@ -1,15 +1,18 @@
 document.addEventListener("DOMContentLoaded", ()=>{
     const conectado = localStorage.getItem("conectado");  
-    var miModal = new bootstrap.Modal(document.getElementById("exampleModal"));
-    var modalLabel = document.getElementById("exampleModalLabel");
-    const btnOkey = document.getElementById("btn-okey");
   
   
     if (conectado === "false" || conectado === undefined) {
-      modalLabel.textContent =
-        "No hay conexión con el servidor. Por favor, intenta de nuevo más tarde.";
-      miModal.show();
-      btnOkey.addEventListener("click", function () {
+      Swal.fire({
+        title: "Sin conexion!",
+        html: "Se ha perdido la conexión con el servidor. Por favor, intenta de nuevo más tarde.",
+        icon: "error",
+        timer: 3500,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      }).then(() => {
         window.location.href = "../index.html";
       });
       return;
@@ -17,27 +20,49 @@ document.addEventListener("DOMContentLoaded", ()=>{
     
   })
 
-
-  var miModal = new bootstrap.Modal(document.getElementById("exampleModal"));
-  var modalLabel = document.getElementById("exampleModalLabel");
-  const btnOkey = document.getElementById("btn-okey");
-
+  const btnEliminar = document.getElementById('eliminarDatos');
+  btnEliminar.addEventListener('click', (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Estas seguro de eliminar la informacion?",
+      text: "Una vez eliminada no se podra recuperar la informacion.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, estoy seguro!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        eliminarDatos();
+        Swal.fire({
+          title: "Eliminado!",
+          text: "La informacion ha sido eliminada correctamente.",
+          icon: "success"
+        });
+      }
+    });
+  });
 
   let ws;
   ws = new WebSocket('ws://localhost:4321');
   ws.addEventListener('message', function(event) {
     const data = event.data;
-    console.log(data);
     const dataParse = JSON.parse(data);
     console.log(dataParse);
     if(dataParse.message === 'Huella eliminada') {
-      modalLabel.textContent = dataParse.message;
-      miModal.show();
-      btnOkey.addEventListener('click', () => {
-        miModal.hide()
+      Swal.fire({
+        title: "Eliminado!",
+        text: "La informacion ha sido eliminada correctamente.",
+        icon: "success",
+        timer: 2500,
       });
     }else{
-        console.log(dataParse.message);
+      Swal.fire({
+        title: "Error!",
+        text: "No se pudo eliminar la informacion.",
+        icon: "error",
+        timer: 2500,
+      });
     }
   });
 
@@ -49,8 +74,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 
   async function eliminarDatos() {
-    // Aquí puedes agregar la lógica para enviar una solicitud al servidor y eliminar los datos del usuario con el ID especificado
-    // Por ahora, solo mostraremos un mensaje en la consola
+   
     const idUsuario = document.getElementById('id').value;
     const url= `http://localhost:4321/api/arduino/deleteFinger/${idUsuario}`
     const response = await fetch(url, {
@@ -60,22 +84,19 @@ document.addEventListener("DOMContentLoaded", ()=>{
       }
     });
     const data = await response.json();
-    console.log(data);
-    
+    if(response.status === 200) {
+      Swal.fire({
+        title: "Eliminado!",
+        text: "La informacion ha sido eliminada correctamente.",
+        icon: "success",
+        timer: 2500,
+      });
+    }else{
+      Swal.fire({
+        title: "Error!",
+        text: "No se pudo eliminar la informacion.",
+        icon: "error",
+        timer: 2500,
+      });
+    }
   }
-  
-  // Función para mostrar los datos del usuario a eliminar en el modal
-  function mostrarDatosUsuarioEliminar() {
-    const idUsuario = document.getElementById('id').value;
-    const confirmarEliminacion = document.getElementById('datosUsuarioEliminar');
-    // Aquí puedes agregar la lógica para obtener los datos del usuario con el ID especificado y mostrarlos en el modal
-    // Por ahora, solo mostraremos un mensaje en el modal
-    confirmarEliminacion.innerHTML = `¿Estás seguro de que deseas eliminar todos los datos del usuario con el ID ${idUsuario}?`;
-
-
-  }
-  
-  // Evento que se dispara al abrir el modal de confirmación
-  $('#confirmarEliminarModal').on('show.bs.modal', function (e) {
-    mostrarDatosUsuarioEliminar();
-  });

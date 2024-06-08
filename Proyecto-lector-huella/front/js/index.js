@@ -11,10 +11,14 @@ document.addEventListener('DOMContentLoaded', function(){
         var title = '';
         msg= opcion ? optionMsg[0] : optionMsg[1];
         title= opcion ? titleMsg[0] : titleMsg[1];
-        var h5 = document.getElementById('conexionModalLabel');
-        h5.textContent= title;
-        $('#conexionModal .modal-body').text(msg);
-        $('#conexionModal').modal('show');
+        Swal.fire({
+            position: "bottom-end",
+            icon: opcion ? "success" : "error",
+            title: title,
+            text: msg,
+            showConfirmButton: false,
+            timer: 1500
+          });
     }
 
     function conectarArduino(e) {
@@ -27,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 document.getElementById('functions').textContent = 'Funciones disponibles';
                 conectado = true;
                 localStorage.setItem('conectado', conectado);
-                // Habilitar los botones una vez que se establezca la conexión
+               
                 habilitarBotones(true);
                 window.ws=ws;
             };
@@ -38,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 document.getElementById('functions').textContent = 'Funciones no disponibles hasta conectar con Arduino'
                 conectado = false;
                 localStorage.setItem('conectado', conectado);
-                // Deshabilitar los botones cuando se cierre la conexión
+                
                 habilitarBotones(false);
             };
         } else {
@@ -69,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function(){
     });
 
 
-    // Función para habilitar o deshabilitar los botones
     function habilitarBotones(habilitar) {
         document.getElementById('Registrar-huella').disabled = !habilitar;
         document.getElementById('Iniciar-sesion').disabled = !habilitar;

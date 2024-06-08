@@ -1,16 +1,19 @@
 document.addEventListener("DOMContentLoaded", async ()=>{
-    const conectado = localStorage.getItem("conectado");  
-  var miModal = new bootstrap.Modal(document.getElementById("exampleModal"));
-  var modalLabel = document.getElementById("exampleModalLabel");
-  const btnOkey = document.getElementById("btn-okey");
+  const conectado = localStorage.getItem("conectado");  
   let ws;
   ws = new WebSocket('ws://localhost:4321');
 
   if (conectado === "false" || conectado === undefined) {
-    modalLabel.textContent =
-      "No hay conexión con el servidor. Por favor, intenta de nuevo más tarde.";
-    miModal.show();
-    btnOkey.addEventListener("click", function () {
+    Swal.fire({
+      title: "Sin conexion!",
+      html: "Se ha perdido la conexión con el servidor. Por favor, intenta de nuevo más tarde.",
+      icon: "error",
+      timer: 3500,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    }).then(() => {
       window.location.href = "../index.html";
     });
     return;

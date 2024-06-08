@@ -1,48 +1,57 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     const conectado = localStorage.getItem("conectado");  
-    var miModal = new bootstrap.Modal(document.getElementById("exampleModal"));
-    var modalLabel = document.getElementById("exampleModalLabel");
-    const btnOkey = document.getElementById("btn-okey");
-    const ulmsg= document.getElementById('msg')
     let ws;
     ws = new WebSocket('ws://localhost:4321');
     if (conectado === "false" || conectado === undefined) {
-      modalLabel.textContent =
-        "No hay conexión con el servidor. Por favor, intenta de nuevo más tarde.";
-      miModal.show();
-      btnOkey.addEventListener("click", function () {
+      Swal.fire({
+        title: "Sin conexion!",
+        html: "Se ha perdido la conexión con el servidor. Por favor, intenta de nuevo más tarde.",
+        icon: "error",
+        timer: 3500,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      }).then(() => {
         window.location.href = "../index.html";
       });
       return;
     }
     ws.addEventListener('message', function(event) {
         const data = event.data;
-
+        
         const dataParse = JSON.parse(data);
-        console.log(dataParse);
+        Swal.fire({
+          position: "center",
+          icon: "info",
+          title: dataParse.message ,
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
         if(dataParse.message === 'Huella guardada') {
-          modalLabel.textContent = dataParse.message;
-          miModal.show();
-          btnOkey.addEventListener('click', () => {
-            window.location.href = "registrar_huella.html";
+          Swal.fire({
+            title: "Huella guardada!",
+            html: "La huella se ha guardado correctamente.",
+            icon: "success",
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading();
+            }
           });
-        } else {
-            console.log(dataParse.message);
-            const li = document.createElement('li');
-            li.textContent= dataParse.message
-            ulmsg.appendChild(li);
         }
     });
     
 const registrarData = document.getElementById('registrarData');
-// Escuchar el clic en el botón capturarHuella
+
 registrarData.addEventListener('click', async (e) => {
     e.preventDefault();
     
     const formData = new FormData();
     
-    // Obtener los datos del formulario
+
     const nombre = document.getElementById('nombre').value;
     const id_huella = document.getElementById('id_huella').value;
     const apellidoPaterno = document.getElementById('apellidoPaterno').value;
