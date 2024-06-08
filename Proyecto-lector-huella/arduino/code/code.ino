@@ -52,14 +52,14 @@ void setup() {
 
 void loop() {
   if (Serial.available() > 0){ 
-    // Lee el comando enviado por el servidor
+   
     String command = Serial.readStringUntil('\n');
-    // Procesa el comando
+  
     procesarComando(command);
     
   }
 
-  delay(50); // Retardo de 50 milisegundos entre lecturas
+  delay(50); 
 }
 
 
@@ -67,7 +67,7 @@ void procesarComando(String command) {
   JsonDocument doc;
   DeserializationError error = deserializeJson(doc, command);
 
-  // Verifica si el comando es válido
+  
   const char* comando = doc["command"];
 
   if (error) {
@@ -128,7 +128,7 @@ void abrirPuerta() {
     servoMotor.write(pos);
     delay(2);
   }
-  // Abre la puerta
+
   enviarExito("Puerta Abierta");
   delay(5000);
   for(pos=0; pos<90; pos++){
@@ -175,7 +175,7 @@ void registrarHuella(uint8_t id) {
     }
   }
 
-  //ok success
+
 
   p = fingerprint.image2Tz(1);
   switch (p) {
@@ -256,7 +256,7 @@ void registrarHuella(uint8_t id) {
       return p;
   }
 
-  //ok success
+
   enviarExito("Creando modelo");
   delay(3000);
 
@@ -276,7 +276,7 @@ void registrarHuella(uint8_t id) {
     return p;
   }
 
-  //despues de crear el modelo
+
   p = fingerprint.storeModel(id);
   if (p == FINGERPRINT_OK) {
     enviarExito("Huella guardada");
@@ -314,7 +314,3 @@ void deleteHuellaId(uint8_t id){
 }
 
 
-
-void enviarIDHuellaAlServidor(int idHuella) {
-  
-}
