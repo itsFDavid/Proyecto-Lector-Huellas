@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const cors = require('cors');
-const WebSocket = require('ws'); // Importa el módulo de WebSockets
+const WebSocket = require('ws'); 
 const arduinoRouter = require('./routes/arduinoRouter');
 const { parser } = require('./utils/arduinoConnection');
 const { dataTMP } = require('./utils/dataTMP');
@@ -11,25 +11,23 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
 
-// Configurar middleware de CORS
 app.use(cors());
-app.use(bodyParser.json({ limit: '50mb' }));
 
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
 const port = 4321;
 const server = http.createServer(app);
 
-// Usar el enrutador para las rutas relacionadas con Arduino
 app.use(express.json());
 app.use('/api/arduino', arduinoRouter);
-// Configurar el servidor de WebSocket
+
+
 const wss = new WebSocket.Server({ server });
 app.set('wss', wss);
-// Manejar conexiones de clientes con WebSockets
+
 wss.on('connection', (ws) => {
     console.log('Nuevo cliente conectado a WebSocket');
 
-    // Manejar desconexiones de clientes
+
     ws.on('close', () => {
         console.log('Cliente desconectado de WebSocket');
     });
@@ -41,7 +39,7 @@ parser.on('data', async (data) => {
     try {
         jsonData = JSON.parse(data);
 
-        // Enviar datos al cliente a través de WebSocket
+ 
         console.log('Datos recibidos del Arduino:', jsonData);
         if(jsonData.found){
             const id_huellaFound = jsonData.id_huellaFound;
@@ -61,7 +59,7 @@ parser.on('data', async (data) => {
                     client.send(JSON.stringify({ event: 'found', data: dataUser }));
                 }
             });
-            //console.log('Datos enviados al cliente en login:', jsonData);
+            
 
         }else if(jsonData.numFootprints){
             console.log('Datos recibidos del num:', jsonData);
@@ -84,13 +82,13 @@ parser.on('data', async (data) => {
         }
     } catch (error) {
         const cleanedData = data.trim();
-        // Si falla el análisis, convertir los datos a JSON
+        
        
         jsonData = { message: cleanedData }; 
-        //console.log('Datos recibidos del Arduinoss:', jsonData);
+        
         console.log('Datos recibidos del Arduinos:', jsonData);
         if(jsonData.message== "Huella guardada"){ 
-            //guardar los datos en data
+           
             const userDataTmp = new dataTMP();
             const dataUser = userDataTmp.getData()[0];
             console.log('Datos del usuario:', dataUser);
@@ -100,7 +98,7 @@ parser.on('data', async (data) => {
             
             const imageName = fotoUser;
             
-            //insertar en la base de datos tipo estos datos:
+            
             const response = await insertar(id_huella, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, carrera, correoInstitucional, imageName);
             console.log('Datos insertados:', response);
             userDataTmp.deleteData();
@@ -125,7 +123,7 @@ parser.on('data', async (data) => {
 
 
 
-// Iniciar el servidor
+
 server.listen(port, () => {
     console.log(`Servidor en ejecución en http://localhost:${port}`);
 });
@@ -133,5 +131,5 @@ server.listen(port, () => {
 
 
 
-// Exportar la aplicación y el servidor
+
 module.exports = { app, server };
