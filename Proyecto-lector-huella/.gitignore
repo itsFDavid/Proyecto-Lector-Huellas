@@ -11,9 +11,8 @@ node_modules/
 public/
 .gitignore
 
-../Manual/
-../Manual/Lector_Huellas.pages
-../Manual/Lector_Huellas.pdf
+../Manual/*
+
 
 
 
