@@ -124,15 +124,15 @@ void verifyFinger() {
 
 void abrirPuerta() {
   int pos;
-  for(pos=90; pos>0; pos--){
+  for(pos=0; pos<90; pos++){
     servoMotor.write(pos);
     delay(2);
   }
 
   enviarExito("Puerta Abierta");
   delay(5000);
-  for(pos=0; pos<90; pos++){
-    pos+=2;
+  for(pos=90; pos>0; pos--){
+    pos-=2;
     servoMotor.write(pos);
     delay(2);
   }
@@ -181,7 +181,7 @@ void registrarHuella(uint8_t id) {
   switch (p) {
     case FINGERPRINT_OK:
       enviarExito("Imagen convertida");
-      delay(3000);
+      delay(2000);
       break;
     case FINGERPRINT_IMAGEMESS:
       enviarError("Imagen muy desordenada");
@@ -215,7 +215,7 @@ void registrarHuella(uint8_t id) {
     switch (p) {
     case FINGERPRINT_OK:
       enviarExito("Imagen tomada");
-      delay(3000);
+      delay(2000);
       break;
     case FINGERPRINT_NOFINGER:
       enviarExito("Coloque su dedo nuevamente en el lector");
@@ -237,7 +237,7 @@ void registrarHuella(uint8_t id) {
   switch (p) {
     case FINGERPRINT_OK:
       enviarExito("Imagen convertida");
-      delay(3000);
+      delay(2000);
       break;
     case FINGERPRINT_IMAGEMESS:
       enviarError("Imagen muy desordenada");
@@ -258,7 +258,7 @@ void registrarHuella(uint8_t id) {
 
 
   enviarExito("Creando modelo");
-  delay(3000);
+  delay(2000);
 
   p = fingerprint.createModel();
 
